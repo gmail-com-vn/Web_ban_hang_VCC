@@ -14,10 +14,15 @@
     "author": "tien",
     "license": "ISC",
     "dependencies": {
+        "cloudinary": "^1.41.1",
         "express": "^4.18.2",
         "express-handlebars": "^7.1.2",
         "method-override": "^3.0.0",
-        "mongoose": "^8.0.3"
+        "mongoose": "^6.7.2",
+        "mongoose-delete": "^1.0.1",
+        "mongoose-sequence": "^6.0.0",
+        "mongoose-slug-generator": "^1.0.4",
+        "multer": "^1.4.5-lts.1"
     },
     "devDependencies": {
         "morgan": "^1.10.0",

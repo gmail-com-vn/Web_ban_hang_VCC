@@ -1,0 +1,42 @@
+*,
+p,
+ol {
+  margin: 0;
+  padding: 0; }
+
+li {
+  list-style: none; }
+
+.flex {
+  display: flex; }
+
+.items-center {
+  align-items: center; }
+
+.content-page {
+  background-image: url("/image/background-page.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 160px;
+  text-align: center; }
+
+.title-nav-page {
+  padding: 35px 5%; }
+
+.title-page {
+  font-weight: 600;
+  font-size: 36px; }
+
+.nav-page {
+  display: flex;
+  justify-content: center;
+  font-size: 15px; }
+
+.breadcrumb-item a {
+  color: #707070; }
+
+.breadcrumb-item a:hover {
+  color: #91ad41; }
+
+.breadcrumb-item.active {
+  color: #91ad41; }
