@@ -1,0 +1,46 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                Tất cả sản phẩm
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tất cả sản phẩm</li>
+            </ol>
+        </div>
+    </div>
+    <div class="body-admin">
+        <div class="row">
+            {{#each products}}
+            <div class="col-sm-4 col-6 col-lg-2 col-md-3">
+                <div class="card">
+                    <a href="/san-pham/{{this.categoryId.slug}}/{{this.slug}}">
+                        <img class="card-img-top img-book" src="{{this.imageProduct.[0]}}" alt="{{this.name}}" />
+                    </a>
+
+                    <div class="book-info">
+                        <div>
+                            <a href="/san-pham/{{this.categoryId.slug}}/{{this.slug}}" title="{{this.name}}"
+                                style="font-weight: 500;">
+                                {{this.name}}
+                            </a>
+                        </div>
+                        <div style="display: flex;">
+                            <p class="card-text card-text-product">{{this.price}} <sup>đ</sup></p>
+                            <form action="/gio-hang" method="POST">
+                                <div style="position: absolute; right: 17px;">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button class="btn btn-click btn-cart btn-addToCart" type="submit">Đặt
+                                        ngay</button>
+                                </div>
+                                <input type="hidden" name="productId" value="{{this._id}}">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

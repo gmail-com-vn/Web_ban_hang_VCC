@@ -1,0 +1,190 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                {{product.name}}
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{product.name}}</li>
+            </ol>
+        </div>
+    </div>
+    <div class="body-admin">
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="div-img-product">
+                    <img src="{{product.imageProduct.[0]}}" style="width: 100%" alt="" />
+                </div>
+            </div>
+            <div class="product-inf col-lg-6 col-12">
+                <div style="margin: 0 30px;">
+                    <div class="title-name">
+                        <p>{{product.name}}</p>
+                    </div>
+                    <div class="flex">
+                        <p class="col-lg-6 title-p">Loại sản phẩm:</p>
+                        <p class="col-lg-6">{{product.categoryId.categoryProduct}}</p>
+                    </div>
+
+
+                    <div class="title-3">
+                        <div class="flex">
+                            <p class="col-lg-6 title-p">Thương hiệu:</p>
+                            <p class="col-lg-6">{{product.tradeMark}}</p>
+                        </div>
+                        <div class="flex">
+                            <p class="col-lg-6 title-p">Giá:</p>
+                            <p class="col-lg-6">{{product.price}}</p>
+                        </div>
+                        <div class="flex">
+                            <p class="col-lg-6 title-p">Số lượng kho:</p>
+                            <p class="col-lg-6">{{product.quantityWarehouse}}</p>
+                        </div>
+                        <div class="flex">
+                            <p class="col-lg-6 title-p">Số lượng đã bán:</p>
+                            <p class="col-lg-6">{{product.quantitySold}}</p>
+                        </div>
+
+                    </div>
+                    <div class="title-description">
+                        <div class="flex item-center">
+                            <p class="title-div">Mô tả</p>
+                            <div class="line-div"></div>
+                        </div>
+                        <div>
+                            {{product.description}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            {{!-- <div class="col-lg-4">
+                <div class="flex" style="line-height: 20px;">
+                    {{#if ratings}}
+                    <div>
+                        <i class="fas fa-star star font-size20"></i>
+                        <i class="fas fa-star star font-size20"></i>
+                        <i class="fas fa-star star font-size20"></i>
+                        <i class="fas fa-star star font-size20"></i>
+                        <i class="fas fa-star star font-size20"></i>
+                    </div>
+                    <div style="display: flex;">
+                        <span class="font-size20 ml-15">
+                            ({{totalStar}}
+                        </span>
+                        <span>&nbsp;/ 5</span>
+                        <span class="font-size20">
+                            )
+                        </span>
+                        <span class="ml-15">({{rate.length}} đánh giá)</span>
+                    </div>
+                    {{/if}}
+                    {{#unless ratings}}
+                    <div style="border-bottom: 1px solid black; padding-bottom: 5px;">Chưa có đánh giá nào</div>
+                    {{/unless}}
+                </div>
+
+            </div> --}}
+            {{!-- <div class="col-lg-8">
+                <div>
+                    {{#if rate}}
+                    <a class="flex mb-10" style="justify-content: flex-end; color: rgb(19, 130, 5);"
+                        href="/member/{{product.userId._id}}">Xem
+                        tất cả
+                        ({{rate.length}}) đánh giá >></a>
+                    {{/if}}
+                </div>
+                <div class="row">
+                    {{#each ratings}}
+                    <div class="col-lg-6">
+                        <div class="card-evaluate" style="margin: 0; background-color: #fff;">
+                            <div class="flex" style="position: relative;">
+                                <img class="avatar" width="85" height="85" src="/{{this.chuSachId.avatar}}" alt="" />
+                                <div>
+                                    <p>{{this.chuSachId.firstname}} {{this.chuSachId.lastname}}{{#if
+                                        (equalHelper this.chuSachId.trangThaiXacMinh 'Thành công')}}
+                                        <i class="fas fa-check-circle check-icon"></i>
+                                        {{/if}}
+                                    </p>
+
+                                    <div>
+                                        {{#if (isEqualTo this.star 1)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (isEqualTo this.star 2)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (isEqualTo this.star 3)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (isEqualTo this.star 4)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (isEqualTo this.star 5)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        {{/if}}
+                                    </div>
+                                </div>
+
+                                <div class="info-avatar text-center">
+                                    Người bán
+                                </div>
+                            </div>
+
+                            <div class="mt-10" style="height: 110px;">
+                                <svg width="10" height="9" viewBox="0 0 10 9" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.34 0.723999V2.092C8.62 2.212 8.116 2.464 7.828 2.848C7.54 3.232 7.396 3.916 7.396 4.9H9.232V8.32H5.704V5.44C5.704 3.952 5.98 2.8 6.532 1.984C7.084 1.144 8.02 0.723999 9.34 0.723999ZM4.156 0.723999V2.092C3.436 2.212 2.932 2.464 2.644 2.848C2.356 3.232 2.212 3.916 2.212 4.9H4.048V8.32H0.52V5.44C0.52 3.952 0.796 2.8 1.348 1.984C1.9 1.144 2.836 0.723999 4.156 0.723999Z"
+                                        fill="#E9435E"></path>
+                                </svg>
+                                <div>
+                                    &emsp;{{this.comment}}
+                                </div>
+                            </div>
+                            <div class="background-{{this.star}} flex p-15 mt-15">
+                                <img class="avatar" width="80" height="80" src="/{{this.nguoiMuonId.avatar}}" alt="" />
+                                <div>
+                                    <p>Đánh giá bởi</p>
+                                    <p>{{this.nguoiMuonId.firstname}} {{this.nguoiMuonId.lastname}}{{#if
+                                        (equalHelper this.nguoiMuonId.trangThaiXacMinh 'Thành công')}}
+                                        <i class="fas fa-check-circle check-icon"></i>
+                                        {{/if}}
+                                    </p>
+                                    <p>{{formatDate this.createdAt}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div> --}}
+        </div>
+    </div>
+
+</div>

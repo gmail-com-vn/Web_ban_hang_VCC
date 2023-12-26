@@ -1,0 +1,28 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                {{post.title}}
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{post.title}}</li>
+            </ol>
+        </div>
+    </div>
+    <div class="body-admin">
+        <div style="text-align: center; text-transform: capitalize; font-size: 25px; font-weight: 300">
+            {{post.title}}
+        </div>
+        <div style="margin: 25px 0; justify-content: center; display:flex;">
+            <img class="card-img-top" src="{{post.imagePost}}" alt="{{post.title}}" style="width: auto; height: 500px;">
+        </div>
+        {{!-- <div class="oi oi-timer" style="display: flex; font-size: 15px; margin-bottom: 25px">{{post.createdAt}} |
+            Đăng
+            bởi: {{post.user.firstname}} {{post.user.lastname}}</div> --}}
+        <div class="news-body" style="font-family: Calibri, sans-serif;">
+            {{{post.content}}}
+        </div>
+    </div>
+
+</div>
