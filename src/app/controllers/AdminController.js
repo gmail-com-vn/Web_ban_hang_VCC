@@ -4,6 +4,7 @@ const cloudinary = require('cloudinary').v2;
 
 const { mongooseToObjiect } = require('../../util/mongoose');
 const { mutipleMongooseToObject } = require('../../util/mongoose');
+const { Promise } = require('mongoose');
 
 // Cấu hình Cloudinary
 cloudinary.config({
@@ -14,7 +15,14 @@ cloudinary.config({
 
 class AdminController {
     getCreateProduct(req, res, next) {
-        res.render('admin/create-product', { cssPath: 'create-product.css' });
+        Category.find({})
+            .then((categories) =>
+                res.render('admin/create-product', {
+                    categories: mutipleMongooseToObject(categories),
+                    cssPath: 'create-product.css',
+                }),
+            )
+            .catch(next);
     }
 
     async postCreateProduct(req, res, next) {
@@ -24,15 +32,17 @@ class AdminController {
 
             for (const file of req.files) {
                 const result = await cloudinary.uploader.upload(file.path);
-                console.log(result.secure_url);
                 imagePaths.push(result.secure_url);
             }
             console.log(imagePaths);
 
             const newProduct = new Product({
                 name: req.body.name,
-                price: req.body.price,
+                categoryId: req.body.categoryId,
                 description: req.body.description,
+                price: req.body.price,
+                tradeMark: req.body.tradeMark,
+                quantityWarehouse: req.body.quantityWarehouse,
                 imageProduct: imagePaths,
             });
 
@@ -41,6 +51,91 @@ class AdminController {
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
+    }
+
+    getEditProduct(req, res, next) {
+        Promise.all([Product.findById(req.params.id), Category.find({})])
+            .then(([product, categories]) =>
+                res.render('admin/edit-product', {
+                    product: mongooseToObjiect(product),
+                    categories: mutipleMongooseToObject(categories),
+                }),
+            )
+            .catch(next);
+    }
+    async updateProduct(req, res, next) {
+        let imagePaths = [];
+        if (req.files && req.files.length > 0) {
+            for (const file of req.files) {
+                const result = await cloudinary.uploader.upload(file.path);
+                imagePaths.push(result.secure_url);
+            }
+
+            Product.updateOne(
+                { _id: req.params.id },
+                {
+                    name: req.body.name,
+                    categoryId: req.body.categoryId,
+                    description: req.body.description,
+                    price: req.body.price,
+                    tradeMark: req.body.tradeMark,
+                    quantityWarehouse: req.body.quantityWarehouse,
+                    imageProduct: imagePaths,
+                },
+            )
+                .then(() => res.redirect('/admin/quan-ly-san-pham'))
+                .catch(next);
+        } else {
+            Product.updateOne(
+                { _id: req.params.id },
+                {
+                    name: req.body.name,
+                    categoryId: req.body.categoryId,
+                    description: req.body.description,
+                    price: req.body.price,
+                    tradeMark: req.body.tradeMark,
+                    quantityWarehouse: req.body.quantityWarehouse,
+                },
+            )
+                .then(() => res.redirect('/admin/quan-ly-san-pham'))
+                .catch(next);
+        }
+
+        console.log(imagePaths);
+    }
+    deleteProduct(req, res, next) {
+        Product.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    getListTrashProduct(req, res, next) {
+        Product.findDeleted({})
+            .populate('categoryId')
+            .then((products) => {
+                console.log(products);
+                res.render('admin/trash-product', {
+                    products: mutipleMongooseToObject(products),
+                });
+            });
+    }
+
+    forceDestroyProduct(req, res, next) {
+        Product.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    restoreProduct(req, res, next) {
+        Product.restore({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    getListProduct(req, res, next) {
+        Promise.all([Product.find({}).populate('categoryId'), Product.countDocumentsDeleted({})])
+            .then(([products, deletedCount]) => res.render('admin/list-product', { products: mutipleMongooseToObject(products), deletedCount }))
+            .catch(next);
     }
 
     getCreateCategory(req, res, next) {

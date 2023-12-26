@@ -2,11 +2,11 @@
     <div class="content-page">
         <div class="title-nav-page">
             <p class="title-page">
-                Thêm sản phẩm
+                Thay đổi thông tin sản phẩm
             </p>
             <ol class="nav-page">
                 <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
+                <li class="breadcrumb-item active" aria-current="page">Thay đổi thông tin sản phẩm</li>
             </ol>
         </div>
     </div>
@@ -15,10 +15,10 @@
         <div class="user-message-error">
             {{errorMessage}}</div>
         {{/if}}
-        <form method="POST" action="/admin/quan-ly-san-pham/them-san-pham" enctype="multipart/form-data">
+        <form method="POST" action="/admin/quan-ly-san-pham/{{product._id}}?_method=PUT" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name" class="label-name">Tên sản phẩm</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{oldInput.name}}">
+                <input type="text" class="form-control" id="name" name="name" value="{{product.name}}">
             </div>
             <fieldset class="form-group">
                 <div class="row">
@@ -33,26 +33,27 @@
                             </label>
                         </div>
                         {{/each}}
+
                     </div>
                 </div>
             </fieldset>
             <div class="form-group">
                 <label for="description">Mô tả</label>
                 <textarea class="form-control" id="description" name="description"
-                    style="height: 230px;">{{oldInput.description}}</textarea>
+                    style="height: 230px;">{{product.description}}</textarea>
             </div>
             <div class="form-group">
                 <label for="price">Giá (VNĐ)</label>
-                <input type="number" class="form-control" id="price" name="price" value="{{oldInput.price}}">
+                <input type="number" class="form-control" id="price" name="price" value="{{product.price}}">
             </div>
             <div class="form-group">
                 <label for="tradeMark">Thương hiệu</label>
-                <input type="text" class="form-control" id="tradeMark" name="tradeMark" value="{{oldInput.tradeMark}}">
+                <input type="text" class="form-control" id="tradeMark" name="tradeMark" value="{{product.tradeMark}}">
             </div>
             <div class="form-group">
                 <label for="quantityWarehouse">Số lượng kho</label>
                 <input type="number" class="form-control" id="quantityWarehouse" name="quantityWarehouse"
-                    value="{{oldInput.quantityWarehouse}}">
+                    value="{{product.quantityWarehouse}}">
             </div>
             <div class="form-group">
                 <label for="imageProduct">Ảnh minh họa (Vui lòng chọn 4 ảnh)</label>

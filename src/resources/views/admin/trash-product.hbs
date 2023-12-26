@@ -1,0 +1,109 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                Thùng rác
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thùng rác</li>
+            </ol>
+        </div>
+    </div>
+    <div class="body-admin">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên sản phẩm</th>
+                    <th scope="col">Loại sản phẩm</th>
+                    <th scope="col" colspan="">Thời gian xóa</th>
+                    <th scope="col">Thao tác</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{this.name}}</td>
+                    <td>{{this.categoryId.categoryProduct}}</td>
+                    <td>{{formatDateTime this.deletedAt}}</td>
+                    <td>
+                        <a href="" class="btn btn-success" data-id="{{this._id}}">Khôi
+                            phục</a>
+                        <a href="" class="btn btn-remove " data-toggle="modal" data-id="{{this._id}}"
+                            data-target="#delete-product-modal">Xóa vĩnh viễn</a>
+                    </td>
+                </tr>
+
+                {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Thùng rác trống
+                        <a style="color: rgb(28, 158, 11);" href="/admin/quan-ly-san-pham">Danh sách sản phẩm</a>
+                    </td>
+                </tr>
+
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{{!-- confirm delete product --}}
+<div id="delete-product-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa sản phẩm?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hành động này không thể khôi phục. Bạc chắc chắn muốn xóa sản phẩm này</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+
+                <button id="btn-delete-product" type="button" class="btn btn-danger">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form name="delete-product-form" method="POST"></form>
+<form name="restore-product-form" method="POST"></form>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var productId;
+        var deleteForm = document.forms['delete-product-form']
+        var restoreForm = document.forms['restore-product-form']
+        var btnDeleteproduct = document.getElementById('btn-delete-product')
+        var restoreBtn = $('.btn-success')
+
+        // When dialog confirm clicked
+        $('#delete-product-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            productId = button.data('id')
+        })
+
+        btnDeleteproduct.onclick = function () {
+            deleteForm.action = '/admin/quan-ly-san-pham/' + productId + '/xoa-vinh-vien?_method=DELETE'
+            deleteForm.submit()
+        }
+
+        restoreBtn.click(function (e) {
+            e.preventDefault() // bỏ hành vi mặc định cảu thẻ html
+
+            var productId = $(this).data('id')
+            restoreForm.action = '/admin/quan-ly-san-pham/' + productId + '/khoi-phuc?_method=PATCH'
+            restoreForm.submit()
+        })
+    })
+
+</script>
