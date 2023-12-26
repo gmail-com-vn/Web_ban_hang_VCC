@@ -5,6 +5,7 @@ const cloudinary = require('cloudinary').v2;
 const { mongooseToObjiect } = require('../../util/mongoose');
 const { mutipleMongooseToObject } = require('../../util/mongoose');
 const { Promise } = require('mongoose');
+const Post = require('../models/Post');
 
 // Cấu hình Cloudinary
 cloudinary.config({
@@ -100,8 +101,6 @@ class AdminController {
                 .then(() => res.redirect('/admin/quan-ly-san-pham'))
                 .catch(next);
         }
-
-        console.log(imagePaths);
     }
     deleteProduct(req, res, next) {
         Product.delete({ _id: req.params.id })
@@ -177,6 +176,92 @@ class AdminController {
     deleteCategory(req, res, next) {
         Category.deleteOne({ _id: req.params.id })
             .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    getCreatePost(req, res, next) {
+        res.render('admin/post/create-post', { cssPath: 'create-post.css' });
+    }
+
+    async postCreatePost(req, res, next) {
+        try {
+            let imagePaths = '';
+            console.log(req.body);
+
+            // for (const file of req.files) {
+            const result = await cloudinary.uploader.upload(req.file.path);
+            imagePaths = result.secure_url;
+            // }
+            console.log(imagePaths);
+
+            const post = new Post({
+                title: req.body.title,
+                content: req.body.content,
+                imagePost: imagePaths,
+            });
+
+            await post.save();
+            res.redirect('/admin/quan-ly-bai-dang');
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    }
+    getEditPost(req, res, next) {
+        Post.findById(req.params.id).then((post) => res.render('admin/post/edit-post', { post: mongooseToObjiect(post), cssPath: 'create-post.css' }));
+    }
+    async updatePost(req, res, next) {
+        let imagePaths = '';
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path);
+            imagePaths = result.secure_url;
+            Post.updateOne(
+                { _id: req.params.id },
+                {
+                    title: req.body.title,
+                    content: req.body.content,
+                    imagePost: imagePaths,
+                },
+            )
+                .then(() => res.redirect('/admin/quan-ly-bai-dang'))
+                .catch(next);
+        } else {
+            Post.updateOne(
+                { _id: req.params.id },
+                {
+                    title: req.body.title,
+                    content: req.body.content,
+                },
+            )
+                .then(() => res.redirect('/admin/quan-ly-bai-dang'))
+                .catch(next);
+        }
+    }
+    getListTrashPost(req, res, next) {
+        Post.findDeleted({}).then((posts) => {
+            console.log(posts);
+            res.render('admin/post/trash-post', {
+                posts: mutipleMongooseToObject(posts),
+            });
+        });
+    }
+    restorePost(req, res, next) {
+        Post.restore({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+    forceDestroyPost(req, res, next) {
+        Post.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+    deletePost(req, res, next) {
+        Post.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+    getListPost(req, res, next) {
+        Promise.all([Post.find({}), Post.countDocumentsDeleted({})])
+            .then(([posts, deletedCount]) => res.render('admin/post/list-post', { posts: mutipleMongooseToObject(posts), deletedCount }))
             .catch(next);
     }
 }

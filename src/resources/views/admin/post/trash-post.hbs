@@ -1,0 +1,112 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                Thùng rác
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thùng rác</li>
+            </ol>
+        </div>
+    </div>
+    <div class="body-admin">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tiêu đề</th>
+                    <th scope="col"></th>
+                    <th scope="col" colspan="">Thời gian xóa</th>
+                    <th scope="col">Thao tác</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each posts}}
+                <tr>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{this.title}}</td>
+                    <td>
+                        <img class="card-img-top" src="{{this.imagePost}}" alt="{{this.title}}"
+                            style="width: 150px; height: 150px;">
+                    </td>
+                    <td>{{formatDateTime this.deletedAt}}</td>
+                    <td>
+                        <a href="" class="btn btn-success btn-restore" data-id="{{this._id}}">Khôi
+                            phục</a>
+                        <a href="" class="btn btn-remove" data-toggle="modal" data-id="{{this._id}}"
+                            data-target="#delete-post-modal">Xóa vĩnh viễn</a>
+                    </td>
+                </tr>
+
+                {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Thùng rác trống
+                        <a style="color: rgb(28, 158, 11)" href="/admin/quan-ly-bai-dang">Danh sách bài đăng</a>
+                    </td>
+                </tr>
+
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{{!-- confirm delete post --}}
+<div id="delete-post-modal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa bài đăng?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hành động này không thể khôi phục. Bạc chắc chắn muốn xóa bài đăng này</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+
+                <button id="btn-delete-post" type="button" class="btn btn-danger">Xóa bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form name="delete-post-form" method="POST"></form>
+<form name="restore-post-form" method="POST"></form>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let postId;
+        const deleteForm = document.forms['delete-post-form']
+        const restoreForm = document.forms['restore-post-form']
+        const btnDeletepost = document.getElementById('btn-delete-post')
+        const restoreBtn = $('.btn-restore')
+
+        // When dialog confirm clicked
+        $('#delete-post-modal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget)
+            postId = button.data('id')
+        })
+
+        btnDeletepost.onclick = function () {
+            deleteForm.action = '/admin/quan-ly-bai-dang/' + postId + '/xoa-vinh-vien?_method=DELETE'
+            deleteForm.submit()
+        }
+
+        restoreBtn.click(function (e) {
+            e.preventDefault() // bỏ hành vi mặc định cảu thẻ html
+
+            const postId = $(this).data('id')
+            restoreForm.action = '/admin/quan-ly-bai-dang/' + postId + '/khoi-phuc?_method=PATCH'
+            restoreForm.submit()
+        })
+    })
+
+</script>
