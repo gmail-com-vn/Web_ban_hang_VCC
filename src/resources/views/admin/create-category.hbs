@@ -1,0 +1,28 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                Thêm danh mục sản phẩm
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm danh mục sản phẩm</li>
+            </ol>
+        </div>
+    </div>
+    <div class="body-admin">
+        {{#if errorMessage}}
+        <div class="user-message-error">
+            {{errorMessage}}</div>
+        {{/if}}
+        <form method="POST" action="/admin/quan-ly-danh-muc/them-danh-muc">
+            <div class="form-group">
+                <label for="categoryProduct">Tên danh mục</label>
+                <input type="text" class="form-control" id="categoryProduct" name="categoryProduct"
+                    value="{{oldInput.categoryProduct}}">
+            </div>
+
+            <button type="submit" class="btn btn-success">Thêm danh mục</button>
+        </form>
+    </div>
+</div>

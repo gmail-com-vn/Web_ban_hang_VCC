@@ -15,7 +15,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.get('/san-pham/them-san-pham', adminControllers.getCreateProduct);
-router.post('/san-pham/them-san-pham', upload.array('imageProduct'), adminControllers.postCreateProduct);
+router.get('/quan-ly-san-pham/them-san-pham', adminControllers.getCreateProduct);
+router.post('/quan-ly-san-pham/them-san-pham', upload.array('imageProduct'), adminControllers.postCreateProduct);
+router.get('/quan-ly-danh-muc/them-danh-muc', adminControllers.getCreateCategory);
+router.post('/quan-ly-danh-muc/them-danh-muc', adminControllers.postCreateCategory);
+router.get('/quan-ly-danh-muc/:id/edit', adminControllers.getEditCategory);
+router.put('/quan-ly-danh-muc/:id', adminControllers.updateCategory);
+router.delete('/quan-ly-danh-muc/:id', adminControllers.deleteCategory);
+router.get('/quan-ly-danh-muc', adminControllers.getListCategory);
 
 module.exports = router;
