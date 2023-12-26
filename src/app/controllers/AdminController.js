@@ -17,7 +17,7 @@ class AdminController {
     getCreateProduct(req, res, next) {
         Category.find({})
             .then((categories) =>
-                res.render('admin/create-product', {
+                res.render('admin/product/create-product', {
                     categories: mutipleMongooseToObject(categories),
                     cssPath: 'create-product.css',
                 }),
@@ -56,7 +56,7 @@ class AdminController {
     getEditProduct(req, res, next) {
         Promise.all([Product.findById(req.params.id), Category.find({})])
             .then(([product, categories]) =>
-                res.render('admin/edit-product', {
+                res.render('admin/product/edit-product', {
                     product: mongooseToObjiect(product),
                     categories: mutipleMongooseToObject(categories),
                 }),
@@ -114,7 +114,7 @@ class AdminController {
             .populate('categoryId')
             .then((products) => {
                 console.log(products);
-                res.render('admin/trash-product', {
+                res.render('admin/product/trash-product', {
                     products: mutipleMongooseToObject(products),
                 });
             });
@@ -134,12 +134,12 @@ class AdminController {
 
     getListProduct(req, res, next) {
         Promise.all([Product.find({}).populate('categoryId'), Product.countDocumentsDeleted({})])
-            .then(([products, deletedCount]) => res.render('admin/list-product', { products: mutipleMongooseToObject(products), deletedCount }))
+            .then(([products, deletedCount]) => res.render('admin/product/list-product', { products: mutipleMongooseToObject(products), deletedCount }))
             .catch(next);
     }
 
     getCreateCategory(req, res, next) {
-        res.render('admin/create-category', { cssPath: 'create-category.css' });
+        res.render('admin/category/create-category', { cssPath: 'create-category.css' });
     }
     postCreateCategory(req, res, next) {
         const category = new Category({
@@ -154,7 +154,7 @@ class AdminController {
     getListCategory(req, res, next) {
         Category.find({})
             .then((categories) =>
-                res.render('admin/list-category', {
+                res.render('admin/category/list-category', {
                     categories: mutipleMongooseToObject(categories),
                 }),
             )
@@ -163,7 +163,7 @@ class AdminController {
     getEditCategory(req, res, next) {
         Category.findById(req.params.id)
             .then((category) =>
-                res.render('admin/edit-category', {
+                res.render('admin/category/edit-category', {
                     category: mongooseToObjiect(category),
                 }),
             )
