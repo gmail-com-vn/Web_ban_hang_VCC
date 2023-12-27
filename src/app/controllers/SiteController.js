@@ -108,20 +108,20 @@ class SiteController {
         }
         bcrypt
             .hash(password, 12)
-            // .then((hashedPassword) => {
-            //     const user = new User({
-            //         firstname: firstname,
-            //         lastname: lastname,
-            //         email: email,
-            //         password: hashedPassword,
-            //         avatar: 'img/avatar-default.png',
-            //         role: 'CUSTOMER',
-            //         cart: {
-            //             items: [],
-            //         },
-            //     });
-            //     return user.save();
-            // })
+            .then((hashedPassword) => {
+                const user = new User({
+                    firstname: firstname,
+                    lastname: lastname,
+                    email: email,
+                    password: hashedPassword,
+                    avatar: 'img/avatar-default.png',
+                    role: 'CUSTOMER',
+                    cart: {
+                        items: [],
+                    },
+                });
+                return user.save();
+            })
             .then(() => {
                 res.redirect('/dang-nhap');
                 return sgMail.send({
