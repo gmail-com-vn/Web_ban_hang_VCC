@@ -1,0 +1,107 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #28a745;">
+    <a class="" href="/"> <img src="/image/logo.png" height="65px" alt=""></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Trang chủ<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="/san-pham/all" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sản phẩm
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {{#each category}}
+                    <a class="dropdown-item" href="/san-pham/{{this.slug}}">{{this.categoryProduct}}</a>
+                    <div class="dropdown-divider"></div>
+                    {{/each}}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tin-tuc">Tin tức</a>
+            </li>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0 form-search" method="GET" action="/tim-kiem">
+            <input class="form-control input-search" name="keyword" type="search" placeholder="Search"
+                aria-label="Search">
+            <span class="span-spliter"></span>
+            <button class="btn btn-search" type="submit"><span><i
+                        class="fa-solid fa-magnifying-glass"></i></span></button>
+        </form>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/gio-hang">
+                    <span>
+                        <i class="fas fa-shopping-cart" style="font-size: 32px;"></i>
+                        {{#if isAuthenticated}}
+                        <span style="font-size: 18px;">({{user.cart.items.length}})</span>
+                        {{/if}}
+                    </span>
+
+                </a>
+            </li>
+
+            {{#if (equalHelper role 'ADMIN')}}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img src="{{user.avatar}}" width="40" height="40" alt="" class="user-avatar"
+                        style="border-radius: 50%;">
+                    {{user.firstname}} {{user.lastname}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/admin/quan-ly-danh-muc">Quản lý danh mục</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/quan-ly-san-pham">Quản lý sản phẩm</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/quan-ly-bai-dang">Quản lý bài đăng</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/quan-ly-don-hang">Quản lý đơn hàng</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/quan-ly-tai-khoan">Quản lý tài khoản</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin/thong-ke">Thống kê</a>
+                    <div class="dropdown-divider"></div>
+                    <form action="/dang-xuat" method="POST">
+                        <button class="dropdown-item btn" type="submit">Đăng xuất</button>
+                    </form>
+                </div>
+            </li>
+            {{/if}}
+
+            {{#if (equalHelper role "CUSTOMER")}}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img src="/img/user.png" alt="" class="user-avatar">
+                    {{user.firstname}} {{user.lastname}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/tai-khoan">Tài khoản của tôi</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/don-hang">Đơn hàng của tôi</a>
+                    <div class="dropdown-divider"></div>
+                    <form action="/dang-xuat" method="POST">
+                        <button class="dropdown-item btn" type="submit">Đăng xuất</button>
+                    </form>
+                </div>
+            </li>
+            {{/if}}
+
+            {{#unless isAuthenticated}}
+            <li class="nav-item m-auto">
+                <a class="btn nav-link btn-outline my-2 my-sm-0" href="/dang-nhap">Đăng nhập</a>
+            </li>
+            <li class="nav-item m-auto">
+                <a class="btn nav-link btn-outline my-2 my-sm-0" href="/dang-ky" style="">Đăng ký</a>
+            </li>
+            {{/unless}}
+        </ul>
+    </div>
+</nav>

@@ -45,6 +45,7 @@ class AdminController {
                 tradeMark: req.body.tradeMark,
                 quantityWarehouse: req.body.quantityWarehouse,
                 imageProduct: imagePaths,
+                userId: req.user,
             });
 
             await newProduct.save();
@@ -198,6 +199,7 @@ class AdminController {
                 title: req.body.title,
                 content: req.body.content,
                 imagePost: imagePaths,
+                userId: req.user,
             });
 
             await post.save();
@@ -207,7 +209,9 @@ class AdminController {
         }
     }
     getEditPost(req, res, next) {
-        Post.findById(req.params.id).then((post) => res.render('admin/post/edit-post', { post: mongooseToObjiect(post), cssPath: 'create-post.css' }));
+        Post.findById(req.params.id)
+            .then((post) => res.render('admin/post/edit-post', { post: mongooseToObjiect(post), cssPath: 'create-post.css' }))
+            .catch(next);
     }
     async updatePost(req, res, next) {
         let imagePaths = '';

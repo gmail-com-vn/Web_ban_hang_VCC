@@ -6,7 +6,8 @@ const sgMail = require('@sendgrid/mail');
 const { validationResult } = require('express-validator/check');
 
 const User = require('../models/User');
-
+const Product = require('../models/Product');
+const { mutipleMongooseToObject } = require('../../util/mongoose');
 sgMail.setApiKey('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');
 
 class SiteController {
@@ -114,7 +115,7 @@ class SiteController {
                     lastname: lastname,
                     email: email,
                     password: hashedPassword,
-                    avatar: 'img/avatar-default.png',
+                    avatar: '/image/avatar-default.png',
                     role: 'CUSTOMER',
                     cart: {
                         items: [],
@@ -129,6 +130,20 @@ class SiteController {
                     from: 'mvt16102001@gmail.com',
                     subject: 'Đăng ký thành công',
                     html: '<h1>Bạn đã đăng ký thành công!</h1>',
+                });
+            })
+            .catch(next);
+    }
+
+    search(req, res, next) {
+        Product.find({
+            $or: [{ name: { $regex: new RegExp(req.query.keyword, 'i') } }],
+        })
+            // .limit(7)
+            .populate('categoryId')
+            .then((products) => {
+                res.render('site/search', {
+                    products: mutipleMongooseToObject(products),
                 });
             })
             .catch(next);

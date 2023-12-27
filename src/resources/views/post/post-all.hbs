@@ -13,21 +13,21 @@
     <div class="body-admin">
         <div class="row" style="">
             {{#each posts}}
-            <div class="col-sm-6 col-lg-4 card-news" style="width: 340px; margin-bottom: 30px;">
+            <div class="col-sm-6 col-lg-4 card-wrapper" style="width: 340px; margin-bottom: 30px;">
                 <div class="card-deck">
-                    <div class="card card-tin-tuc">
+                    <div class="card card-post">
                         <a href="/tin-tuc/{{this.slug}}">
-                            <img class="card-img-top" src="{{this.imagePost}}" alt="" style="height: 340px">
+                            <img src="{{this.imagePost}}" alt="" style="height: 340px; width: 100%;">
                         </a>
-                        <div class="card-body" style="background-color: #f5f6fb;">
+                        <div class="card-body">
                             <a href="/tin-tuc/{{this.slug}}" style="color: black;">
-                                <h5 class="card-title" style="font-size: 17px; text-transform: uppercase;">
+                                <h5 class="title" style="font-size: 17px; text-transform: uppercase;">
                                     {{this.title}}</h5>
                             </a>
-                            <div class="card-body-content">
+                            <div class="content">
                                 {{{this.content}}}
                             </div>
-                            <p class="card-text oi oi-calendar"><small class="text-muted">{{formatDate
+                            <p class="oi oi-calendar"><small class="text-muted">{{formatDate
                                     this.createdAt}}</small></p>
                         </div>
                     </div>

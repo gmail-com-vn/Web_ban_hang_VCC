@@ -1,0 +1,12 @@
+.card-body .content {
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.card-post:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}

@@ -13,6 +13,9 @@ li {
 .items-center {
   align-items: center; }
 
+.m-auto {
+  margin: auto; }
+
 .content-page {
   background-image: url("/image/background-page.png");
   background-size: cover;
@@ -40,3 +43,26 @@ li {
 
 .breadcrumb-item.active {
   color: #91ad41; }
+
+.form-search {
+  border-radius: 92px;
+  overflow: hidden; }
+
+.input-search {
+  border: none;
+  border-radius: 0; }
+
+.btn-search {
+  border: none;
+  border-radius: 0; }
+
+.span-spliter {
+  width: 1px;
+  height: 28px; }
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white; }
+
+.btn-outline {
+  border: 1px solid;
+  min-width: 102px; }

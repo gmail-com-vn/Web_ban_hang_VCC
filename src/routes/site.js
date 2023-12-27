@@ -4,6 +4,7 @@ const router = express.Router();
 
 const siteController = require('../app/controllers/SiteController');
 const User = require('../app/models/User');
+
 const isLoginSuccess = require('../app/middlewares/isLoginSuccess');
 const isLogin = require('../app/middlewares/isLogin');
 
@@ -62,6 +63,8 @@ router.post('/dang-xuat', isLogin, siteController.postLogout);
 // router.get('/dat-lai-mat-khau/:token', siteController.getNewPassword);
 
 // router.post('/mat-khau-moi', siteController.postNewPassword);
+
+router.get('/tim-kiem', siteController.search);
 router.get('/', siteController.getHome);
 
 module.exports = router;
