@@ -1,0 +1,32 @@
+<div class="body flex">
+    <div class="col-lg-8 div-title-login">
+        <div class="flex text-title-login">
+            <div>
+                <h2>WELCOME</h2>
+                <h2>TO</h2>
+            </div>
+            <h1>BOOK LOVERS</h1>
+        </div>
+        <img width="100%" src="/img/logo-login.jpg" alt="">
+    </div>
+    <div class="col-lg-4 div-login">
+        <div class="container-form div-content-login">
+            <h2>Quên mật khẩu</h2>
+            <p>
+                Tìm kiếm email
+            </p>
+            {{#if errorMessage}}
+            <div class="user-message-error">{{errorMessage}}</div>
+            {{/if}}
+
+            <form class="login-form" action="/dat-lai-mat-khau" method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control form-auth" id="email" name="email"></input>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            </form>
+        </div>
+    </div>
+</div>

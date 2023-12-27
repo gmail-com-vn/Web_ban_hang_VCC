@@ -1,0 +1,50 @@
+<div class="flex body">
+    <div class="col-lg-8 div-title-login">
+        <div class="flex text-title-login">
+            <div>
+                <h2>WELCOME</h2>
+                <h2>TO</h2>
+            </div>
+            <h1>BOOK LOVERS</h1>
+        </div>
+        <img width="100%" src="/img/logo-login.jpg" alt="">
+    </div>
+    <div class="col-lg-4 div-login">
+        <div class="container-form div-content-login">
+            <h2>Đăng ký</h2>
+            <p>
+                Nếu bạn chưa có tài khoản, đăng ký tại đây
+            </p>
+            {{#if errorMessage}}
+            <div class="user-message-error">{{errorMessage}}</div>
+            {{/if}}
+            <form class="login-form" action="/dang-ky" method="POST" novalidate>
+                <div class="form-group">
+                    <label for="firstname">Họ</label>
+                    <input class="form-control form-auth" type="firstname" id="firstname" name="firstname"
+                        value="{{oldInput.firstname}}"></input>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Tên</label>
+                    <input class="form-control form-auth" type="lastname" id="lastname" name="lastname"
+                        value="{{oldInput.lastname}}"></input>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control form-auth" type="email" id="email" name="email"
+                        value="{{oldInput.email}}"></input>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" class="form-control form-auth" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Xác nhận mật khẩu</label>
+                    <input type="password" class="form-control form-auth" id="confirmPassword" name="confirmPassword">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+            </form>
+        </div>
+    </div>
+</div>
