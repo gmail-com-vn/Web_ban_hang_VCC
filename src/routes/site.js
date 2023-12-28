@@ -1,6 +1,7 @@
 const express = require('express');
 const { check, body } = require('express-validator/check');
 const router = express.Router();
+const multer = require('multer');
 
 const siteController = require('../app/controllers/SiteController');
 const User = require('../app/models/User');
@@ -8,6 +9,17 @@ const User = require('../app/models/User');
 const isLoginSuccess = require('../app/middlewares/isLoginSuccess');
 const isLogin = require('../app/middlewares/isLogin');
 const isCustomer = require('../app/middlewares/isCustomer');
+
+const storage = multer.diskStorage({
+    destination: function (req, files, cb) {
+        cb(null, './src/public/uploads');
+    },
+    filename: function (req, files, cb) {
+        cb(null, Date.now() + files.originalname);
+    },
+});
+
+const upload = multer({ storage: storage });
 
 router.get('/dang-nhap', isLoginSuccess, siteController.getLogin);
 router.post(
@@ -72,6 +84,11 @@ router.post('/gio-hang', isCustomer, siteController.addCart);
 router.get('/thanh-toan', isCustomer, siteController.getPay);
 router.post('/dat-hang', isCustomer, siteController.postOrder);
 router.get('/don-hang-cua-toi', isCustomer, siteController.getOrder);
+router.put('/ho-so-cua-toi/:id/avatar', isCustomer, upload.single('avatar'), siteController.updateAvatar);
+
+router.get('/ho-so-cua-toi', isCustomer, siteController.getProfile);
+router.put('/ho-so-cua-toi', isCustomer, siteController.updateProfile);
+
 router.get('/', siteController.getHome);
 
 module.exports = router;

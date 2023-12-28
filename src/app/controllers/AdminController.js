@@ -6,6 +6,8 @@ const { mongooseToObjiect } = require('../../util/mongoose');
 const { mutipleMongooseToObject } = require('../../util/mongoose');
 const { Promise } = require('mongoose');
 const Post = require('../models/Post');
+const Order = require('../models/Order');
+const User = require('../models/User');
 
 // Cấu hình Cloudinary
 cloudinary.config({
@@ -266,6 +268,133 @@ class AdminController {
     getListPost(req, res, next) {
         Promise.all([Post.find({}), Post.countDocumentsDeleted({})])
             .then(([posts, deletedCount]) => res.render('admin/post/list-post', { posts: mutipleMongooseToObject(posts), deletedCount }))
+            .catch(next);
+    }
+
+    updateOrderStatus(req, res, next) {
+        Order.updateOne({ _id: req.params.id }, req.body)
+            .then(() => res.redirect('/admin/quan-ly-don-hang'))
+            .catch(next);
+    }
+
+    getListOrder(req, res, next) {
+        Order.find({})
+            .then((orders) =>
+                res.render('admin/order', {
+                    orders: mutipleMongooseToObject(orders),
+                }),
+            )
+            .catch(next);
+    }
+
+    getStatistical(req, res, next) {
+        const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+        Promise.all([
+            Order.aggregate([
+                {
+                    $project: {
+                        month: { $substr: ['$createdAt', 5, 2] }, // Trích xuất thông tin tháng từ trường createdAt
+                        totalMonney: 1, // Trường totalMonney (và các trường khác nếu cần)
+                        orderStatus: 1,
+                    },
+                },
+                {
+                    $match: {
+                        month: { $in: months }, // Thay "07" bằng tháng cần lấy dữ liệu
+                        orderStatus: 'Hoàn thành',
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$month', // Nhóm các đơn hàng cùng tháng lại với nhau
+                        totalTongTien: { $sum: '$totalMonney' }, // Tính tổng tiền của các đơn hàng trong mỗi tháng
+                        totalDonHang: { $sum: 1 },
+                    },
+                },
+                {
+                    $sort: { _id: 1 }, // Sắp xếp theo thời gian tăng dần
+                },
+            ]),
+            Order.aggregate([
+                {
+                    $match: {
+                        orderStatus: 'Hoàn thành', // Lọc các đơn hàng có trạng thái là 'Hoàn thành'
+                    },
+                },
+                {
+                    $unwind: '$products', // Mở rộng mảng products thành từng bản ghi riêng lẻ
+                },
+                {
+                    $group: {
+                        _id: '$products.product', // Nhóm các sản phẩm cùng loại lại với nhau
+                        totalSold: { $sum: '$products.quantity' }, // Tính tổng số lượng sản phẩm đã bán
+                    },
+                },
+                {
+                    $sort: { totalSold: -1 }, // Sắp xếp số lượng sản phẩm đã bán giảm dần
+                },
+                {
+                    $limit: 10, // Chọn 10 sản phẩm bán chạy nhất
+                },
+            ]),
+        ])
+
+            .then(([ordersData, productData]) => {
+                const totalTongTienArray = new Array(12).fill(0); // Tạo mảng có 12 phần tử và giá trị ban đầu là 0
+                const totalDonHangArray = new Array(12).fill(0); // Tạo mảng có 12 phần tử và giá trị ban đầu là 0
+
+                // Gán tổng tiền vào mảng totalTongTienArray tương ứng với tháng
+                ordersData.forEach((item) => {
+                    const index = parseInt(item._id, 10) - 1; // Ví dụ: tháng 01 -> index 0, tháng 02 -> index 1, ..., tháng 12 -> index 11
+                    totalTongTienArray[index] = item.totalTongTien;
+                    totalDonHangArray[index] = item.totalDonHang;
+                });
+
+                const productsData = []; // Tạo mảng chứa thông tin thống kê sản phẩm bán chạy
+                // Gán thông tin của từng sản phẩm vào mảng productsData
+                productData.forEach((item) => {
+                    productsData.push({
+                        name: item._id.name,
+                        totalSold: item.totalSold,
+                    });
+                });
+
+                res.render('admin/statistical', {
+                    totalTongTien: JSON.stringify(totalTongTienArray), // Ví dụ số đơn hàng theo từng tháng
+                    totalDonHang: JSON.stringify(totalDonHangArray), // Ví dụ số đơn hàng theo từng tháng
+                    productsData: JSON.stringify(productsData),
+                });
+            })
+            .catch();
+    }
+
+    getlListAccount(req, res, next) {
+        User.find({ role: 'CUSTOMER' })
+            .then((users) =>
+                res.render('admin/account', {
+                    users: mutipleMongooseToObject(users),
+                }),
+            )
+            .catch(next);
+    }
+    lockAccount(req, res, next) {
+        User.updateOne(
+            { id: req.params.id },
+            {
+                lock: true,
+            },
+        )
+            .then(() => res.redirect('/admin/quan-ly-tai-khoan'))
+            .catch(next);
+    }
+    unlockAccount(req, res, next) {
+        User.updateOne(
+            { id: req.params.id },
+            {
+                lock: false,
+            },
+        )
+            .then(() => res.redirect('/admin/quan-ly-tai-khoan'))
             .catch(next);
     }
 }

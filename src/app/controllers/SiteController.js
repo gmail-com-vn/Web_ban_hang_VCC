@@ -8,8 +8,17 @@ const { validationResult } = require('express-validator/check');
 const User = require('../models/User');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
-const { mutipleMongooseToObject } = require('../../util/mongoose');
+const { mutipleMongooseToObject, mongooseToObjiect } = require('../../util/mongoose');
 sgMail.setApiKey('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');
+
+const cloudinary = require('cloudinary').v2;
+
+// Cấu hình Cloudinary
+cloudinary.config({
+    cloud_name: 'dlkm9tiem',
+    api_key: '778982786272933',
+    api_secret: 'fTrhzosPAPmkI__Lj6qcyPljDeQ',
+});
 
 class SiteController {
     getLogin(req, res, next) {
@@ -269,6 +278,46 @@ class SiteController {
                 });
             })
             .catch(next);
+    }
+
+    getProfile(req, res, next) {
+        User.findOne({ id: req.user._id })
+            .then((user) => {
+                res.render('customer/profile', {
+                    user: mongooseToObjiect(user),
+                });
+            })
+
+            .catch(next);
+    }
+
+    updateProfile(req, res, next) {
+        User.updateOne(
+            { _id: req.user._id },
+            {
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                phone: req.body.phone,
+                address: req.body.address,
+            },
+        )
+            .then(() => res.redirect('/ho-so-cua-toi'))
+            .catch(next);
+    }
+    async updateAvatar(req, res, next) {
+        let imagePaths = '';
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path);
+            imagePaths = result.secure_url;
+            User.updateOne(
+                { _id: req.params.id },
+                {
+                    avatar: imagePaths,
+                },
+            )
+                .then(() => res.redirect('/ho-so-cua-toi'))
+                .catch(next);
+        }
     }
 
     getHome(req, res, next) {

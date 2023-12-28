@@ -35,7 +35,7 @@
                         class="fa-solid fa-magnifying-glass"></i></span></button>
         </form>
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item active m-auto">
                 <a class="nav-link" href="/gio-hang">
                     <span>
                         <i class="fas fa-shopping-cart" style="font-size: 32px;"></i>
@@ -79,11 +79,11 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <img src="/img/user.png" alt="" class="user-avatar">
+                    <img src="{{user.avatar}}" alt="" class="user-avatar">
                     {{user.firstname}} {{user.lastname}}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/tai-khoan">Tài khoản của tôi</a>
+                    <a class="dropdown-item" href="/ho-so-cua-toi">Hồ sơ của tôi</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/don-hang-cua-toi">Đơn hàng của tôi</a>
                     <div class="dropdown-divider"></div>

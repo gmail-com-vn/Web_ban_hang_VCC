@@ -1,0 +1,87 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                Hồ sơ của tôi
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Hồ sơ của tôi</li>
+            </ol>
+        </div>
+    </div>
+    <div class="body-page">
+        <div class="div-info-account flex">
+            <div class="col-lg-9">
+                <form method="POST" action="/ho-so-cua-toi?_method=PUT">
+                    <div class="form-group flex">
+                        <label class="field-profile item-center" style="margin: auto 35px auto auto;">Email</label>
+                        <span class="form-control" style="border: none;">{{user.email}}</span>
+                    </div>
+                    <div class="form-group flex">
+                        <label class="field-profile" for="firstname">Họ</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname"
+                            value="{{user.firstname}}" />
+                    </div>
+                    <div class="form-group flex">
+                        <label class="field-profile" for="lastname">Tên</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname"
+                            value="{{user.lastname}}" />
+                    </div>
+                    <div class="form-group flex">
+                        <label class="field-profile" for="phone">Số điện thoại</label>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{user.phone}}" />
+                    </div>
+                    <div class="form-group flex">
+                        <label class="field-profile" for="address">Địa chỉ</label>
+                        <input type="text" class="form-control" id="address" name="address" value="{{user.address}}" />
+                    </div>
+                    <div class="flex">
+                        <div class="field-profile"></div>
+                        <button type="submit" class="btn btn-success" style="margin-left: -35px;">Lưu</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 flex" style="justify-content: flex-end;">
+                <div>
+                    <img class="avatar" width="130" height="130" src="{{user.avatar}}" alt="" style="float: right;" />
+                    <a href="" class="btn btn-outline mt-10" data-toggle="modal" data-target="#account-modal-avatar"
+                        style="width: 130px; float: right; font-size: 13px; margin-right: 9px;">Thay đổi
+                        avatar</a>
+                </div>
+
+                <div id="account-modal-avatar" class="modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Thay đổi avatar</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form method="POST" action="/ho-so-cua-toi/{{user._id}}/avatar?_method=PUT"
+                                enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <h6>Chọn ảnh</h6>
+
+                                    <input type="file" class="form-control" id="avatar" name="avatar" required />
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="preview-images" style=""></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Xác nhận</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
