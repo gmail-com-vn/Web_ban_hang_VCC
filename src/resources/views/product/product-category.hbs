@@ -29,10 +29,9 @@
                         <div style="display: flex;">
                             <p class="card-text card-text-product">{{this.price}} <sup>đ</sup></p>
                             <form action="/gio-hang" method="POST">
-                                <div style="position: absolute; right: 17px;">
+                                <div>
                                     <input type="hidden" name="quantity" value="1">
-                                    <button class="btn btn-click btn-cart btn-addToCart" type="submit">Đặt
-                                        ngay</button>
+                                    <button class="btn" type="submit"><i class="fa-solid fa-cart-plus"></i></button>
                                 </div>
                                 <input type="hidden" name="productId" value="{{this._id}}">
                             </form>

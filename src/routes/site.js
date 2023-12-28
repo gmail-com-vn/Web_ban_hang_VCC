@@ -7,6 +7,7 @@ const User = require('../app/models/User');
 
 const isLoginSuccess = require('../app/middlewares/isLoginSuccess');
 const isLogin = require('../app/middlewares/isLogin');
+const isCustomer = require('../app/middlewares/isCustomer');
 
 router.get('/dang-nhap', isLoginSuccess, siteController.getLogin);
 router.post(
@@ -65,6 +66,12 @@ router.post('/dang-xuat', isLogin, siteController.postLogout);
 // router.post('/mat-khau-moi', siteController.postNewPassword);
 
 router.get('/tim-kiem', siteController.search);
+router.post('/gio-hang/xoa-san-pham', isCustomer, siteController.postCartDeleteProduct);
+router.get('/gio-hang', isCustomer, siteController.getCart);
+router.post('/gio-hang', isCustomer, siteController.addCart);
+router.get('/thanh-toan', isCustomer, siteController.getPay);
+router.post('/dat-hang', isCustomer, siteController.postOrder);
+router.get('/don-hang-cua-toi', isCustomer, siteController.getOrder);
 router.get('/', siteController.getHome);
 
 module.exports = router;

@@ -7,6 +7,7 @@ const { validationResult } = require('express-validator/check');
 
 const User = require('../models/User');
 const Product = require('../models/Product');
+const Order = require('../models/Order');
 const { mutipleMongooseToObject } = require('../../util/mongoose');
 sgMail.setApiKey('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');
 
@@ -144,6 +145,127 @@ class SiteController {
             .then((products) => {
                 res.render('site/search', {
                     products: mutipleMongooseToObject(products),
+                });
+            })
+            .catch(next);
+    }
+
+    getCart(req, res, next) {
+        req.user
+            .populate({
+                path: 'cart.items.productId',
+                populate: {
+                    path: 'categoryId',
+                    model: 'Category',
+                },
+            })
+            .then((user) => {
+                const products = user.cart.items;
+                console.log(products);
+                let total = 0;
+                products.forEach((p) => {
+                    total += p.quantity * p.productId.price;
+                });
+                res.render('customer/cart', {
+                    products: mutipleMongooseToObject(products),
+                    total: total,
+                });
+            })
+            .catch(next);
+    }
+
+    addCart(req, res, next) {
+        const prodId = req.body.productId;
+        const quantity = req.body.quantity;
+        Product.findById(prodId)
+            .then((product) => {
+                return req.user.addToCart(product, quantity);
+            })
+            .then(() => {
+                req.session.user = req.user;
+                return req.session.save(() => {
+                    res.redirect('/gio-hang');
+                });
+            })
+            .catch(next);
+    }
+
+    postCartDeleteProduct(req, res, next) {
+        const prodId = req.body.productId;
+        req.user
+            .removeFromCart(prodId)
+            .then(() => {
+                req.session.user = req.user;
+                return req.session.save(() => {
+                    res.redirect('/gio-hang');
+                });
+            })
+            .catch(next);
+    }
+
+    getPay(req, res, next) {
+        req.user
+            .populate({
+                path: 'cart.items.productId',
+                populate: {
+                    path: 'categoryId',
+                    model: 'Category',
+                },
+            })
+            .then((user) => {
+                const products = user.cart.items;
+                console.log(products);
+                let total = 0;
+                products.forEach((p) => {
+                    total += p.quantity * p.productId.price;
+                });
+                res.render('customer/pay', {
+                    products: mutipleMongooseToObject(products),
+                    total: total,
+                });
+            })
+            .catch(next);
+    }
+
+    postOrder(req, res, next) {
+        req.user
+            .populate('cart.items.productId')
+            .then((user) => {
+                const products = user.cart.items.map((i) => {
+                    return { quantity: i.quantity, product: { ...i.productId._doc } };
+                });
+                console.log(products);
+                let total = 0;
+                products.forEach((p) => {
+                    total += p.quantity * p.product.price;
+                });
+                const order = new Order({
+                    customerId: user._id,
+                    orderStatus: 'Chờ xác nhận',
+                    name: req.body.name,
+                    phone: req.body.phone,
+                    address: req.body.address,
+                    products: products,
+                    totalMonney: total,
+                });
+                return order.save();
+            })
+            .then(() => {
+                return req.user.clearCart();
+            })
+            .then(() => {
+                req.session.user = req.user;
+                return req.session.save(() => {
+                    res.redirect('/don-hang-cua-toi');
+                });
+            });
+    }
+
+    getOrder(req, res, next) {
+        Order.find({ 'user.userId': req.user._id })
+            .then((orders) => {
+                res.render('customer/order', {
+                    orders: mutipleMongooseToObject(orders),
                 });
             })
             .catch(next);
