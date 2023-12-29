@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 ratingSchema = mongoose.Schema({
     star: { type: Number },
     customerId: { type: Schema.Types.ObjectId, ref: 'User' },
-    productId: { type: Number, ref: 'Product', required: true },
+    productId: { type: Number, ref: 'Product' },
+    // orderId: { type: Schema.Types.ObjectId, ref: 'Order' },
     comment: { type: String },
     imageRating: { type: String },
     feedback: { type: String },

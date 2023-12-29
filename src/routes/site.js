@@ -78,16 +78,18 @@ router.post('/dang-xuat', isLogin, siteController.postLogout);
 // router.post('/mat-khau-moi', siteController.postNewPassword);
 
 router.get('/tim-kiem', siteController.search);
-router.post('/gio-hang/xoa-san-pham', isCustomer, siteController.postCartDeleteProduct);
-router.get('/gio-hang', isCustomer, siteController.getCart);
-router.post('/gio-hang', isCustomer, siteController.addCart);
-router.get('/thanh-toan', isCustomer, siteController.getPay);
-router.post('/dat-hang', isCustomer, siteController.postOrder);
-router.get('/don-hang-cua-toi', isCustomer, siteController.getOrder);
-router.put('/ho-so-cua-toi/:id/avatar', isCustomer, upload.single('avatar'), siteController.updateAvatar);
+router.post('/gio-hang/xoa-san-pham', isLogin, isCustomer, siteController.postCartDeleteProduct);
+router.get('/gio-hang', isLogin, isCustomer, siteController.getCart);
+router.post('/gio-hang', isLogin, isCustomer, siteController.addCart);
+router.get('/thanh-toan', isLogin, isCustomer, siteController.getPay);
+router.post('/dat-hang', isLogin, isCustomer, siteController.postOrder);
+router.get('/don-hang-cua-toi', isLogin, isCustomer, siteController.getOrder);
+router.put('/ho-so-cua-toi/:id/avatar', isLogin, isCustomer, upload.single('avatar'), siteController.updateAvatar);
 
-router.get('/ho-so-cua-toi', isCustomer, siteController.getProfile);
-router.put('/ho-so-cua-toi', isCustomer, siteController.updateProfile);
+router.get('/ho-so-cua-toi', isLogin, isCustomer, siteController.getProfile);
+router.put('/ho-so-cua-toi', isLogin, isCustomer, siteController.updateProfile);
+router.get('/danh-gia-cua-toi', isLogin, isCustomer, siteController.getEvaluate);
+router.post('/danh-gia-cua-toi', isLogin, isCustomer, upload.single('imageRating'), siteController.postEvaluate);
 
 router.get('/', siteController.getHome);
 

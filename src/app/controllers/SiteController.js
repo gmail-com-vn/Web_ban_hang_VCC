@@ -9,6 +9,7 @@ const User = require('../models/User');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const { mutipleMongooseToObject, mongooseToObjiect } = require('../../util/mongoose');
+const Rating = require('../models/Rating');
 sgMail.setApiKey('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');
 
 const cloudinary = require('cloudinary').v2;
@@ -319,7 +320,80 @@ class SiteController {
                 .catch(next);
         }
     }
+    getEvaluate(req, res, next) {
+        let ratedProducts, unratedProducts, ratingList;
 
+        // Lấy các sản phẩm đã được đánh giá bởi người dùng (req.user.id)
+        Rating.find({ userId: req.user.id })
+            .populate('customerId')
+            .then((ratings) => {
+                ratingList = ratings;
+                ratedProducts = ratings.map((rating) => rating.productId);
+                console.log('rating', ratedProducts);
+
+                // Lấy tất cả đơn hàng của người dùng hiện tại (req.user.id)
+                return Order.find({ customerId: req.user.id });
+            })
+            .then((orders) => {
+                const productIdsInOrders = orders.flatMap((order) => order.products.map((product) => product.product)); // Lấy tất cả productId từ các đơn hàng của người dùng
+
+                // Lấy tất cả sản phẩm dựa trên các productId
+                return Product.find({ _id: { $in: productIdsInOrders } }).populate('categoryId');
+            })
+            .then((products) => {
+                // console.log('products', products);
+
+                // Tìm các sản phẩm đã đánh giá
+                const ratedProductsInfo = products.filter((product) => ratedProducts.includes(product._id));
+
+                // Tìm các sản phẩm chưa được đánh giá
+                unratedProducts = products.filter((product) => !ratedProducts.includes(product._id));
+
+                res.render('customer/evaluate', {
+                    ratedProducts: mutipleMongooseToObject(ratedProductsInfo),
+                    unratedProducts: mutipleMongooseToObject(unratedProducts),
+                    ratingList: mutipleMongooseToObject(ratingList),
+                });
+                console.log('Các sản phẩm đã đánh giá:', ratedProductsInfo);
+                console.log('Các sản phẩm chưa được đánh giá:', unratedProducts);
+                console.log('Các đánh giá:', ratingList);
+            })
+            .catch((err) => {
+                // Xử lý lỗi nếu có
+                console.error(err);
+            });
+    }
+
+    async postEvaluate(req, res, next) {
+        let imagePaths = '';
+        console.log(req.file);
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path);
+            imagePaths = result.secure_url;
+            const rating = new Rating({
+                productId: req.body.productId,
+                star: req.body.star,
+                comment: req.body.comment,
+                customerId: req.user._id,
+                imageRating: imagePaths,
+            });
+            rating
+                .save()
+                .then(() => res.redirect('back'))
+                .catch(next);
+        } else {
+            const rating = new Rating({
+                productId: req.body.productId,
+                star: req.body.star,
+                comment: req.body.comment,
+                customerId: req.user._id,
+            });
+            rating
+                .save()
+                .then(() => res.redirect('back'))
+                .catch(next);
+        }
+    }
     getHome(req, res, next) {
         res.render('home', { cssPath: 'home.css' });
     }

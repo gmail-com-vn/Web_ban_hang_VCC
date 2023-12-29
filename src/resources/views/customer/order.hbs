@@ -37,19 +37,14 @@
                     <th scope="row">{{this._id}}</th>
                     <td>
                         {{#each products}}
-                        <form action="/danh-gia/{{this.product.slug}}" method="GET">
-                            <div style="display: flex; margin: 5px 0">
-                                <div>
-                                    <img src="/{{this.product.img.[3]}}" alt="" style="height: 50px; margin: 7px">
-                                </div>
-                                <div>
-                                    <div>{{this.product.name}}: Số lượng {{this.quantity}}</div>
-                                    <button class="btn btn-purchase btn-success" type="submit"
-                                        style="font-size: 13px;">Đánh
-                                        giá</button>
-                                </div>
+                        <div style="display: flex; margin: 5px 0">
+                            <div>
+                                <img src="{{this.product.imageProduct.[0]}}" alt="" style="height: 50px; margin: 7px">
                             </div>
-                        </form>
+                            <div>
+                                <div>{{this.product.name}}: Số lượng {{this.quantity}}</div>
+                            </div>
+                        </div>
                         {{/each}}
                     </td>
                     <td>{{this.name}}</td>
@@ -60,6 +55,51 @@
                     <td>{{this.orderStatus}}</td>
                     <td>
                         <div>
+
+                            <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
+                                data-target="#order-modal-{{this._id}}">Xem chi tiết</a>
+
+                            <div id="order-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title flex">Xem chi tết đơn hàng
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h6>Mã đơn hàng: {{this._id}}</h6>
+                                            <h6>Sản phẩm:</h6>
+                                            <div class="flex" style="background-color: #f3f3f3;">
+                                                {{#each products}}
+                                                <div style="display: flex; margin: 5px 0">
+                                                    <div>
+                                                        <img src="{{this.product.imageProduct.[0]}}" alt=""
+                                                            style="height: 50px;">
+                                                    </div>
+                                                    <div>
+                                                        <div>{{this.product.name}}: Số lượng {{this.quantity}}</div>
+                                                    </div>
+                                                </div>
+                                                {{/each}}
+                                            </div>
+                                            <p>Tên người nhận: {{this.name}}</p>
+                                            <p>Số điện thoại: {{this.phone}}</p>
+                                            <p>Địa chỉ: {{this.address}}</p>
+                                            <p>Tổng tiền: {{this.totalMonney}}</p>
+                                            <p>Thời gian đặt hàng: {{formatDateTime this.createdAt}}</p>
+                                            <p>Trạng thái đơn hàng: {{this.orderStatus}}</p>
+                                            {{!-- <h4 class="text-center">Đánh giá</h4> --}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </td>
                 </tr>

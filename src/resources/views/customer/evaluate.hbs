@@ -1,0 +1,224 @@
+<div class="container-page">
+    <div class="content-page">
+        <div class="title-nav-page">
+            <p class="title-page">
+                Đánh giá của tôi
+            </p>
+            <ol class="nav-page">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Đánh giá của tôi</li>
+            </ol>
+        </div>
+    </div>
+    <div style="margin: 0 5%;">
+        <div class="flex container-tabs">
+            <div class="tab-item active">Chưa đánh giá</div>
+            <div class="tab-item">Đã đánh giá</div>
+            <div class="line"></div>
+        </div>
+        <div>
+            <div class="tab-pane active">
+                {{#each unratedProducts}}
+                <div>
+                    <div>
+                        <p>Đã hoàn thành</p>
+                    </div>
+                    <div>
+                        <img src="{{this.imageProduct.[0]}}" height="80" width="80" alt="">
+                        <p>{{this.name}}</p>
+                        <p>{{this.categoryId.categoryProduct}}</p>
+                    </div>
+                    <div>
+
+                        <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
+                            data-target="#evaluate-modal-{{this._id}}">Đánh giá</a>
+                        <div id="evaluate-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title flex">Đánh giá sản phẩm
+                                        </h5>
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6>Sản phẩm</h6>
+                                        <div class="flex" style="background-color: #f3f3f3; padding: 15px 0;">
+                                            <div class="col-lg-3" style="padding-right: 0;">
+                                                <img width="50px" height="50px" src="{{this.imageProduct.[0]}}"
+                                                    alt="" />
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <p>Tên sản phẩm: {{this.name}}</p>
+                                                <p>Loại sản phẩm: {{this.categoryId.categoryProduct}}</p>
+                                            </div>
+                                        </div>
+                                        <h4 class="text-center">Đánh giá</h4>
+                                        <form method="POST" action="/danh-gia-cua-toi" enctype="multipart/form-data">
+                                            <div class="rating" style="font-size: 40px; justify-content: center;">
+                                                <input type="hidden" class="rating-star" name="star" value="3">
+                                                <div class="rating-item" data-rate="1"></div>
+                                                <div class="rating-item" data-rate="2"></div>
+                                                <div class="rating-item active" data-rate="3"></div>
+                                                <div class="rating-item" data-rate="4"></div>
+                                                <div class="rating-item" data-rate="5"></div>
+                                            </div>
+                                            <p>Thêm hình ảnh</p>
+                                            <input type="file" class="form-control" id="imageRating"
+                                                name="imageRating" />
+                                            <div class="form-group">
+                                                <label for="comment">Nhận xét của bạn{{user._id}}</label>
+                                                <textarea class="form-control" id="comment" name="comment"
+                                                    style="height: 200px;" required></textarea>
+                                            </div>
+
+                                            <input type="hidden" name="productId" value="{{this._id}}">
+
+                                            <div class="col-lg-12">
+                                                <button type="submit" class="btn btn-success col-lg-12"
+                                                    style="border-radius: 15px;">Gửi đánh giá</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="tab-pane">
+                {{#each ratedProducts}}
+                <div>
+                    <div>
+                        <p>Đã hoàn thành</p>
+                    </div>
+                    <div>
+                        <img src="{{this.imageProduct.[0]}}" height="80" width="80" alt="">
+                        <p>{{this.name}}</p>
+                        <p>{{this.categoryId.categoryProduct}}</p>
+                    </div>
+                    <div>
+
+                        <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
+                            data-target="#evaluate-modal-{{this._id}}">Đánh giá</a>
+                        <div id="evaluate-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title flex">Đánh giá sản phẩm
+                                        </h5>
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6>Sản phẩm</h6>
+                                        <div class="flex" style="background-color: #f3f3f3; padding: 15px 0;">
+                                            <div class="col-lg-3" style="padding-right: 0;">
+                                                <img width="50px" height="50px" src="{{this.imageProduct.[0]}}"
+                                                    alt="" />
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <p>Tên sản phẩm: {{this.name}}</p>
+                                                <p>Loại sản phẩm: {{this.categoryId.categoryProduct}}</p>
+                                            </div>
+                                        </div>
+                                        <h4 class="text-center">Đánh giá</h4>
+                                        <form method="POST" action="/danh-gia-cua-toi" enctype="multipart/form-data">
+                                            <div class="rating" style="font-size: 40px; justify-content: center;">
+                                                <input type="hidden" class="rating-star" name="star" value="3">
+                                                <div class="rating-item" data-rate="1"></div>
+                                                <div class="rating-item" data-rate="2"></div>
+                                                <div class="rating-item active" data-rate="3"></div>
+                                                <div class="rating-item" data-rate="4"></div>
+                                                <div class="rating-item" data-rate="5"></div>
+                                            </div>
+                                            <p>Thêm hình ảnh</p>
+                                            <input type="file" class="form-control" id="imageRating"
+                                                name="imageRating" />
+                                            <div class="form-group">
+                                                <label for="comment">Nhận xét của bạn{{user._id}}</label>
+                                                <textarea class="form-control" id="comment" name="comment"
+                                                    style="height: 200px;" required></textarea>
+                                            </div>
+
+                                            <input type="hidden" name="productId" value="{{this._id}}">
+
+                                            <div class="col-lg-12">
+                                                <button type="submit" class="btn btn-success col-lg-12"
+                                                    style="border-radius: 15px;">Gửi đánh giá</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const $QS = document.querySelector.bind(document);
+    const $$QSA = document.querySelectorAll.bind(document);
+
+    const tabs = $$QSA(".tab-item");
+    const panes = $$QSA(".tab-pane");
+
+    const tabActive = $QS(".tab-item.active");
+    const line = $QS(".container-tabs .line");
+
+    requestIdleCallback(function () {
+        line.style.left = tabActive.offsetLeft + "px";
+        line.style.width = tabActive.offsetWidth + "px";
+    });
+
+    tabs.forEach((tab, index) => {
+        const pane = panes[index];
+
+        tab.onclick = function () {
+            $QS(".tab-item.active").classList.remove("active");
+            $QS(".tab-pane.active").classList.remove("active");
+
+            line.style.left = this.offsetLeft + "px";
+            line.style.width = this.offsetWidth + "px";
+
+            this.classList.add("active");
+            pane.classList.add("active");
+        };
+    });
+</script>
+
+<script>
+    const container = document.querySelector('.rating');
+    const ratingStar = document.querySelector('.rating-star');
+    const items = container.querySelectorAll('.rating-item')
+    container.onclick = e => {
+        const elClass = e.target.classList;
+        // change the rating if the user clicks on a different star
+        if (!elClass.contains('active')) {
+            items.forEach( // reset the active class on the star
+                item => item.classList.remove('active')
+            );
+            ratingStar.value = e.target.getAttribute("data-rate")
+            console.log(e.target.getAttribute("data-rate"));
+            console.log(ratingStar.value)
+            elClass.add('active'); // add active class to the clicked star
+        }
+    };
+</script>
