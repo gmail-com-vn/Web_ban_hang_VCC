@@ -22,7 +22,7 @@
     </a>
     {{/unless}}
     {{#if products.length}}
-    <div class="container" style="margin-top: 35px;">
+    <div class="body-page-1">
         <div class="row"
             style="border: 1px solid rgb(36, 202, 72); font-size: 16px; background-color: rgb(19, 129, 5); color: #fff; padding-top: 5px; padding-bottom: 5px;">
             <div class="col-4" style="padding-left: 55px;">Sản phẩm</div>
@@ -49,13 +49,13 @@
             <div class="col-2" style="padding-top: 78px;">{{multiplication this.quantity this.productId.price}}</div>
             <div class="col-1" style="padding-top: 72px;">
                 <form action="/gio-hang/xoa-san-pham" method="POST">
-                    <button class="btn btn-click btn-remove" type="submit">Xóa</button>
+                    <button class="btn btn-danger" type="submit">Xóa</button>
                     <input type="hidden" name="productId" value="{{this.productId._id}}">
                 </form>
             </div>
         </div>
         {{/each}}
-        <button class="btn btn-click btn-cart" style="font-size: 20px"><a href="/thanh-toan">Mua hàng</a></button>
+        <a class="btn btn-success" style="margin-top: 15px;" href="/thanh-toan">Mua hàng</a>
     </div>
     {{/if}}
 </div>

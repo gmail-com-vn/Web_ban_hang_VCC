@@ -12,18 +12,16 @@
     </div>
     <div class="body-admin">
         <form name="container-form" method="POST" action="/admin/quan-ly-san-pham/handle-form-actions">
-            <div class="div-trash flex">
+            <div class="conatiner-trash-create flex">
                 <div class="col-lg-6">
-                    <button type="button" class="btn btn-secondary btn-trash" data-toggle="tooltip"
-                        data-placement="right" title="Thùng rác">
-                        <a class="oi oi-trash flex" href="/admin/quan-ly-san-pham/thung-rac">
-                            <p>({{deletedCount}})</p>
-                        </a>
-                    </button>
+                    <a class="btn btn-outline-info" href="/admin/quan-ly-san-pham/thung-rac">
+                        <i class="fa-solid fa-trash" style="font-size: 24px;"></i>
+                        <span>({{deletedCount}})</span>
+                    </a>
                 </div>
                 <div class="col-lg-6">
-                    <a class="add-prod item-center" href="/admin/quan-ly-san-pham/them-san-pham"><span
-                            class="oi oi-plus"></span>Thêm sản phẩm</a>
+                    <a class="btn btn-success item-center" href="/admin/quan-ly-san-pham/them-san-pham">
+                        <i class="fa-solid fa-plus"></i> Thêm sản phẩm</a>
                 </div>
             </div>
 
@@ -35,7 +33,7 @@
                     </label>
                 </div>
 
-                <select class="checkbox-select-all-options" name="action" required>
+                <select class="checkbox-select-all-options" name="action" required style="margin: 0 10px;">
                     <option value="">--hành động--</option>
                     <option value="delete">Xóa</option>
                 </select>
@@ -43,7 +41,7 @@
                 <button class="btn btn-primary btn-sm check-all-submit-btn" disabled>Thực hiện</button>
             </div>
 
-            <table class="table">
+            <table class="table container-items">
                 <thead>
                     <tr>
                         <th scope="col"></th>
@@ -88,9 +86,9 @@
                         <td>{{this.price}}</td>
                         <td>{{formatDateTime this.createdAt}}</td>
                         <td>
-                            <a href="/admin/quan-ly-san-pham/{{this._id}}/edit" class="btn btn-success"
+                            <a href="/admin/quan-ly-san-pham/{{this._id}}/edit" class="btn btn-warning"
                                 style="margin-right: 5px;">Sửa</a>
-                            <a href="" class="btn btn-remove" data-toggle="modal" data-id="{{this._id}}"
+                            <a href="" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
                                 data-target="#delete-product-modal">Xóa</a>
                         </td>
                     </tr>

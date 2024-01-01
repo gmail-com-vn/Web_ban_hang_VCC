@@ -10,25 +10,35 @@
             </ol>
         </div>
     </div>
-    <div class="body-admin">
+    <div class="conatiner-create flex">
+        <div class="col-lg-9">
+        </div>
+        <div class="col-lg-3">
+            <a class="item-center btn btn-success" href="/admin/quan-ly-danh-muc/them-danh-muc"><i
+                    class="fa-solid fa-plus"></i>Thêm
+                danh mục</a>
+        </div>
+    </div>
+    <div class="body-admin wrapper ml-auto mr-auto">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">
+                    <th scope="col-lg-9">
                         Tên loại danh mục
                     </th>
-                    <th scope="col">
+                    <th scope="col-lg-3">
+                        Thao tác
                     </th>
                 </tr>
             </thead>
             <tbody style="border-bottom: 1px solid #c0c9d2;">
                 {{#each categories}}
                 <tr>
-                    <td>{{this.categoryProduct}}</td>
-                    <td>
-                        <a href="/admin/quan-ly-danh-muc/{{this._id}}/edit" class="btn btn-success"
+                    <td scope="col" class="col-lg-9">{{this.categoryProduct}}</td>
+                    <td scope="col" class="col-lg-3">
+                        <a href="/admin/quan-ly-danh-muc/{{this._id}}/edit" class="btn btn-warning"
                             style="margin-right: 5px;">Sửa</a>
-                        <a href="" class="btn btn-remove" data-toggle="modal" data-id="{{this._id}}"
+                        <a href="" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#delete-category-modal">Xóa</a>
                     </td>
                 </tr>

@@ -10,17 +10,17 @@
             </ol>
         </div>
     </div>
-    <div style="margin: 0 5%;">
-        <div class="flex container-tabs">
-            <div class="tab-item active">Chưa trả lời</div>
-            <div class="tab-item">Đã trả lời</div>
+    <div class="body-page-2">
+        <div class="flex container-tabs row">
+            <div class="tab-item active col-lg-6">Chưa trả lời</div>
+            <div class="tab-item col-lg-6">Đã trả lời</div>
             <div class="line"></div>
         </div>
         <div>
             <div class="tab-pane active">
                 <div class="row">
                     {{#each notFeedbackRatings}}
-                    <div class="col-lg-9" style="border: 1px solid #ccc; margin-top: 10px; padding: 15px">
+                    <div class="col-lg-12" style="border: 1px solid #ccc; margin-top: 10px; padding: 15px">
                         <div class="flex">
                             <div class="flex items-center col-lg-6">
                                 <img class="avatar" width="65" height="65" src="{{this.customerId.avatar}}" alt="" />
@@ -203,7 +203,7 @@
             <div class="tab-pane">
                 <div class="row">
                     {{#each feedbackRatings}}
-                    <div class="col-lg-9" style="border: 1px solid #ccc; margin-top: 10px; padding: 15px">
+                    <div class="col-lg-12" style="border: 1px solid #ccc; margin-top: 10px; padding: 15px">
                         <div class="flex">
                             <div class="flex items-center col-lg-6">
                                 <img class="avatar" width="65" height="65" src="{{this.customerId.avatar}}" alt="" />

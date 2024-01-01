@@ -26,6 +26,7 @@ router.patch('/quan-ly-san-pham/:id/khoi-phuc', isLogin, isAdmin, adminControlle
 router.delete('/quan-ly-san-pham/:id/xoa-vinh-vien', isLogin, isAdmin, adminController.forceDestroyProduct);
 router.delete('/quan-ly-san-pham/:id', isLogin, isAdmin, adminController.deleteProduct);
 router.get('/quan-ly-san-pham', isLogin, isAdmin, adminController.getListProduct);
+router.post('/quan-ly-san-pham/handle-form-actions', isLogin, isAdmin, adminController.handleFormActions);
 
 router.get('/quan-ly-bai-dang/tao-bai-dang', isLogin, isAdmin, adminController.getCreatePost);
 router.post('/quan-ly-bai-dang/tao-bai-dang', isLogin, isAdmin, upload.single('imagePost'), adminController.postCreatePost);

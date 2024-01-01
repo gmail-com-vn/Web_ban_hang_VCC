@@ -13,95 +13,130 @@
         </div>
     </div>
 
-    <div class="div-content row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
-            <div class="div-chart">
-                <h3>Biểu đồ doanh thu theo từng tháng</h3>
+    <div class="div-content body-page-2">
+        <div class="flex container-tabs row">
+            <div class="tab-item active col-lg-4">Biểu đồ doanh thu theo từng tháng</div>
+            <div class="tab-item col-lg-4">Biểu đồ số đơn hàng theo từng tháng</div>
+            <div class="tab-item col-lg-4">Biểu đồ sản phẩm bán chạy</div>
+            <div class="line"></div>
+        </div>
+        <div>
+            <div class="div-chart tab-pane active">
                 <canvas id="revenueChart"></canvas>
+                <h3 class="text-center" style="margin-top:10px;">Biểu đồ doanh thu theo từng tháng</h3>
             </div>
-            <div class="div-chart">
-                <h3>Biểu đồ số đơn hàng theo từng tháng</h3>
+            <div class="div-chart tab-pane">
                 <canvas id="ordersChart"></canvas>
+                <h3 class="text-center" style="margin-top:10px;">Biểu đồ số đơn hàng theo từng tháng</h3>
             </div>
-            <div class="div-chart">
-                <h3>Biểu đồ sản phẩm bán chạy</h3>
+            <div class="div-chart tab-pane">
                 <canvas id="productsChart"></canvas>
+                <h3 class="text-center" style="margin-top:10px;">Biểu đồ sản phẩm bán chạy</h3>
             </div>
         </div>
-        <div class="col-lg-2"></div>
     </div>
+</div>
 
 
-    <script>
-        // Lấy dữ liệu đơn hàng và đơn hàng từ biến ordersData và productsData được truyền từ server
-        var totalTongTien = {{{ totalTongTien }}};
-        var totalDonHang = {{{ totalDonHang }}};
-        var productsData = {{{ productsData }}};
+<script>
+    // Lấy dữ liệu đơn hàng và đơn hàng từ biến ordersData và productsData được truyền từ server
+    var totalTongTien = {{{ totalTongTien }}};
+    var totalDonHang = {{{ totalDonHang }}};
+    var productsData = {{{ productsData }}};
 
-        // Vẽ biểu đồ doanh thu
-        var ordersChart = new Chart(document.getElementById('revenueChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                datasets: [{
-                    label: 'Doanh thu',
-                    data: totalTongTien,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    // Vẽ biểu đồ doanh thu
+    var ordersChart = new Chart(document.getElementById('revenueChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            datasets: [{
+                label: 'Doanh thu',
+                data: totalTongTien,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
 
-        // Vẽ biểu đồ đơn hàng
-        var ordersChart = new Chart(document.getElementById('ordersChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-                datasets: [{
-                    label: 'Số đơn hàng',
-                    data: totalDonHang,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    // Vẽ biểu đồ đơn hàng
+    var ordersChart = new Chart(document.getElementById('ordersChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            datasets: [{
+                label: 'Số đơn hàng',
+                data: totalDonHang,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
 
-        // Vẽ biểu đồ số đơn hàng
-        var productsChart = new Chart(document.getElementById('productsChart'), {
-            type: 'bar',
-            data: {
-                labels: productsData.map(p => p.name),
-                datasets: [{
-                    label: 'Số lượng',
-                    data: productsData.map(p => p.totalSold),
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    // Vẽ biểu đồ số đơn hàng
+    var productsChart = new Chart(document.getElementById('productsChart'), {
+        type: 'bar',
+        data: {
+            labels: productsData.map(p => p.name),
+            datasets: [{
+                label: 'Số lượng',
+                data: productsData.map(p => p.totalSold),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    </script>
+        }
+    });
+</script>
+<script>
+    const $QS = document.querySelector.bind(document);
+    const $$QSA = document.querySelectorAll.bind(document);
+
+    const tabs = $$QSA(".tab-item");
+    const panes = $$QSA(".tab-pane");
+
+    const tabActive = $QS(".tab-item.active");
+    const line = $QS(".container-tabs .line");
+
+    requestIdleCallback(function () {
+        line.style.left = tabActive.offsetLeft + "px";
+        line.style.width = tabActive.offsetWidth + "px";
+    });
+
+    tabs.forEach((tab, index) => {
+        const pane = panes[index];
+
+        tab.onclick = function () {
+            $QS(".tab-item.active").classList.remove("active");
+            $QS(".tab-pane.active").classList.remove("active");
+
+            line.style.left = this.offsetLeft + "px";
+            line.style.width = this.offsetWidth + "px";
+
+            this.classList.add("active");
+            pane.classList.add("active");
+        };
+    });
+</script>

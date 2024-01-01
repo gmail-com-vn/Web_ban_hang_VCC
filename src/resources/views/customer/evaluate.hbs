@@ -10,28 +10,43 @@
             </ol>
         </div>
     </div>
-    <div style="margin: 0 5%;">
-        <div class="flex container-tabs">
-            <div class="tab-item active">Chưa đánh giá</div>
-            <div class="tab-item">Đã đánh giá</div>
+    <div class="body-page-1">
+        <div class="flex container-tabs row">
+            <div class="tab-item active col-lg-6">Chưa đánh giá</div>
+            <div class="tab-item col-lg-6">Đã đánh giá</div>
             <div class="line"></div>
         </div>
         <div>
-            <div class="tab-pane active">
+            <div class="tab-pane active row">
                 {{#each unratedProducts}}
-                <div>
+                <div class="col-lg-6" style="border: 1px solid #ccc; margin-top: 10px; padding: 15px">
                     <div>
-                        <p>Đã hoàn thành</p>
+                        <p style="text-align: right; color: #91ad41;">Đã hoàn thành</p>
                     </div>
-                    <div>
-                        <img src="{{this.imageProduct.[0]}}" height="80" width="80" alt="">
-                        <p>{{this.name}}</p>
-                        <p>{{this.categoryId.categoryProduct}}</p>
+                    <div class="flex" style="border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 15px">
+                        <a class="col-lg-9 flex items-center"
+                            href="/san-pham/{{this.productId.categoryId.slug}}/{{this.productId.slug}}">
+                            <img src="{{this.imageProduct.[0]}}" height="80" width="80" alt="">
+                            <div>
+                                <p>{{this.name}} </p>
+                                <p style="color: rgb(140, 136, 136);">Loại sản phẩm: {{this.categoryId.categoryProduct}}
+                                </p>
+                            </div>
+                        </a>
+                        <div class="col-lg-3 items-center" style="display: grid;">
+                            <div style=" justify-self: end;">
+                                <span style=" text-decoration:underline;">đ</span>
+                                <span>{{this.price}}</span>
+                            </div>
+                            <div style=" justify-self: end;">
+                                <span>x1</span>
+                            </div>
+                        </div>
                     </div>
-                    <div>
+                    <div style="display: grid; margin-top: 15px">
 
                         <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
-                            data-target="#evaluate-modal-{{this._id}}">Đánh giá</a>
+                            data-target="#evaluate-modal-{{this._id}}" style="justify-self: end;">Đánh giá</a>
                         <div id="evaluate-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -55,7 +70,6 @@
                                                 <p>Loại sản phẩm: {{this.categoryId.categoryProduct}}</p>
                                             </div>
                                         </div>
-                                        <h4 class="text-center">Đánh giá</h4>
                                         <form method="POST" action="/danh-gia-cua-toi" enctype="multipart/form-data">
                                             <div class="rating" style="font-size: 40px; justify-content: center;">
                                                 <input type="hidden" class="rating-star" name="star" value="3">
@@ -156,10 +170,12 @@
                                     &emsp;{{this.comment}}
                                 </div>
                             </div>
+                            {{#if this.feedback}}
                             <div style="background-color: #f3f3f3; padding: 10px 20px; margin-left: 85px;">
                                 <p style="font-size: 18px; font-weight:600">Phản hồi của người bán</p>
                                 <p>{{this.feedback}}</p>
                             </div>
+                            {{/if}}
                             <a class="flex" style="margin-left: 85px; margin-top: 20px;"
                                 href="/san-pham/{{this.productId.categoryId.slug}}/{{this.productId.slug}}">
 

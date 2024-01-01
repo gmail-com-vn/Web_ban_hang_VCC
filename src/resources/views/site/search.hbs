@@ -10,39 +10,40 @@
             </ol>
         </div>
     </div>
-    <div class="body-admin">
+    <div class="body-page-2">
         <div class="row">
             {{#unless products }}
             <div class="flex col-lg-12">
                 <img style="margin: auto;" src="/image/search-no-result.png" alt="">
             </div>
             {{/unless}}
-
             {{#each products}}
-            <div class="col-sm-4 col-6 col-lg-2 col-md-3">
-                <div class="card">
+            <div class="col-sm-6 col-12 col-lg-3 col-md-3 container-product">
+                <div class="card card-product">
                     <a href="/san-pham/{{this.categoryId.slug}}/{{this.slug}}">
-                        <img class="card-img-top img-product" src="{{this.imageProduct.[0]}}" alt="{{this.name}}" />
+                        <img class="card-img-top img-book" src="{{this.imageProduct.[0]}}" alt="{{this.name}}" />
                     </a>
 
                     <div class="product-info">
                         <div>
-                            <a href="/san-pham/{{this.categoryId.slug}}/{{this.slug}}" title="{{this.name}}"
-                                style="font-weight: 500;">
+                            <a class="card-title-product" href="/san-pham/{{this.categoryId.slug}}/{{this.slug}}"
+                                title="{{this.name}}" style="font-weight: 500;">
                                 {{this.name}}
                             </a>
                         </div>
-                        <div class="flex">
-                            <p class="card-text card-text-product">{{this.price}} <sup>đ</sup></p>
-                            <form action="/gio-hang" method="POST">
-                                <div style="position: absolute; right: 17px;">
+                        <form action="/gio-hang" method="POST">
+                            <div style="display: flex;">
+                                <p class="card-text card-text-product col-6">{{this.price}}
+                                    <sup>đ</sup>
+                                </p>
+                                <div class="col-6" style="display: flex; justify-content: flex-end;">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button class="btn btn-click btn-cart btn-addToCart" type="submit">Đặt
-                                        ngay</button>
+                                    <button class="btn btn-outline-success" type="submit"><i
+                                            class="fa-solid fa-cart-plus" style="font-size: 22px;"></i></button>
                                 </div>
                                 <input type="hidden" name="productId" value="{{this._id}}">
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

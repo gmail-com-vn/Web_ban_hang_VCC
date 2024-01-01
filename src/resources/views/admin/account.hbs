@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="body-page">
+    <div class="body-page-2">
         <table class="table">
             <thead>
                 <tr>
@@ -59,7 +59,7 @@
                                                 <p>Tên: {{this.lastname}}</p>
                                                 <p>Email: {{this.email}}</p>
                                                 <p>Địa chỉ: {{this.email}}</p>
-                                                <p>Số điện thoại: {{this.email}}</p>
+                                                <p>Số điện thoại: {{this.phone}}</p>
                                                 {{#if this.lock}}
                                                 <p>Trạng thái tài khoản: Đang bị khóa
                                                 </p>
@@ -80,10 +80,10 @@
                             </div>
                         </div>
                         {{#if this.lock}}
-                        <a href="" class="btn" data-toggle="modal" data-id="{{this._id}}"
+                        <a href="" class="btn btn-warning" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#unlock-account-modal">Mở khóa tài khoản</a>
                         {{else}}
-                        <a href="" class="btn" data-toggle="modal" data-id="{{this._id}}"
+                        <a href="" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#lock-account-modal">Khóa tài khoản</a>
                         {{/if}}
                     </td>

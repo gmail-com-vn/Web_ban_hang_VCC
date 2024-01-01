@@ -17,6 +17,15 @@ li {
 .m-auto {
     margin: auto;
 }
+a {
+    color: black;
+}
+a:hover {
+    color: #91ad41;
+}
+.box-shadow {
+    box-shadow: 0px 0px 13px 3px rgba(0, 0, 0, 0.2);
+}
 .content-page {
     background-image: url('/image/background-page.png');
     background-size: cover;
@@ -51,15 +60,25 @@ li {
 .breadcrumb-item.active {
     color: #91ad41;
 }
+.navbar-page {
+    padding: 0 10%;
+    background-color: #28a745;
+}
+.body-page,
+.body-admin {
+    margin: 50px 10%;
+}
 
 // header
 .form-search {
     border-radius: 92px;
     overflow: hidden;
+    margin-right: 50px;
 }
 .input-search {
     border: none;
     border-radius: 0;
+    min-width: 350px;
 }
 .btn-search {
     border: none;
@@ -83,7 +102,38 @@ li {
     width: 40px;
     height: 40px;
 }
+.text-title-login {
+    margin: 30px 0 30px 50px;
 
+    h2 {
+        margin-bottom: 0;
+        text-align: right;
+        background: linear-gradient(to right, green, rgb(203, 223, 173));
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    h1 {
+        margin-bottom: 0;
+        font-size: 78px;
+        background: linear-gradient(to right, green, rgb(203, 223, 173));
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+.div-login {
+    margin-top: 140px;
+    background-color: #fff;
+    max-width: 450px;
+    margin-left: 50px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.div-content-login {
+    margin: 30px;
+}
+
+//
 .container-tabs {
     position: relative;
 }
@@ -108,6 +158,7 @@ li {
     border-top-right-radius: 5px;
     border-bottom: 5px solid transparent;
     opacity: 0.6;
+    border: 1px solid #c23564;
     cursor: pointer;
     transition: all 0.5s ease;
 }
@@ -163,4 +214,11 @@ li {
 /* make until the hovered (the rest) empty */
 .rating-item:hover ~ .rating-item::before {
     content: '\2606';
+}
+
+.body-page-1 {
+    margin: 50px 15%;
+}
+.body-page-2 {
+    margin: 50px 20%;
 }

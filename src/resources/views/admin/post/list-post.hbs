@@ -11,20 +11,20 @@
         </div>
     </div>
     <div class="body-admin">
-        <div class="div-trash flex">
+        <div class="conatiner-trash-create flex">
             <div class="col-lg-6">
-                <button type="button" class="btn btn-secondary btn-trash" data-toggle="tooltip" data-placement="right"
-                    title="Thùng rác">
-                    <a class="oi oi-trash" href="/admin/quan-ly-bai-dang/thung-rac">({{deletedCount}})</a>
-                </button>
+
+                <a class="btn btn-outline-info" href="/admin/quan-ly-bai-dang/thung-rac">
+                    <i class="fa-solid fa-trash" style="font-size: 24px;"></i>({{deletedCount}})</a>
             </div>
             <div class="col-lg-6">
-                <a class="add-prod item-center" href="/admin/quan-ly-bai-dang/tao-bai-dang"><span
-                        class="oi oi-plus"></span>Tạo bài
+                <a class="item-center btn btn-success" href="/admin/quan-ly-bai-dang/tao-bai-dang"><i
+                        class="fa-solid fa-plus"></i>Tạo
+                    bài
                     đăng</a>
             </div>
         </div>
-        <table class="table">
+        <table class="table container-items">
             <thead>
                 <tr>
                     <th scope="col">
@@ -45,15 +45,15 @@
                     <th scope="row">
                         {{this._id}}
                     </th>
-                    <td>{{this.title}}</td>
+                    <td scope="row">{{this.title}}</td>
                     <td>
                         <img class="card-img-top" src="{{this.imagePost}}" alt="{{this.title}}"
                             style="width: 150px; height: 150px;">
                     </td>
                     <td>{{formatDateTime this.createdAt}}</td>
                     <td>
-                        <a href="/admin/quan-ly-bai-dang/{{this._id}}/edit" class="btn btn-success">Sửa</a>
-                        <a href="" class="btn btn-remove" data-toggle="modal" data-id="{{this._id}}"
+                        <a href="/admin/quan-ly-bai-dang/{{this._id}}/edit" class="btn btn-warning">Sửa</a>
+                        <a href="" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#delete-post-modal">Xóa</a>
                     </td>
                 </tr>
@@ -62,7 +62,8 @@
                 <tr>
                     <td colspan="5" class="text-center">
                         Bạn chưa đăng bài nào.
-                        <a style="color: rgb(28, 158, 11)" href="/admin/quan-ly-bai-dang/tao-bai-dang">Tạo bài đăng</a>
+                        <a style="color: rgb(28, 158, 11)" href="/admin/quan-ly-bai-dang/tao-bai-dang"><i
+                                class="fa-solid fa-plus"></i> Tạo bài đăng</a>
                     </td>
                 </tr>
 

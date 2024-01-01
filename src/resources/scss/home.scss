@@ -1,4 +1,256 @@
-h1 {
-    font-size: 27px;
-    color: red;
+.slider {
+    position: relative;
+}
+
+.slider .text-slider1 {
+    left: 15%;
+    color: #91ad41;
+    position: absolute;
+    top: 40%;
+    font-size: 75px;
+}
+
+.slider .text-slider2 {
+    right: 15%;
+    color: #91ad41;
+    position: absolute;
+    top: 40%;
+    font-size: 75px;
+}
+
+.card-group {
+    height: 300px;
+    padding: 0;
+}
+
+.card-all-product {
+    color: #fff;
+    background-size: 50% auto;
+    background-repeat: no-repeat;
+    background-position: right center;
+    padding-left: 10%;
+}
+
+.card-a {
+    background-image: url(/img/col_1.png);
+    background-color: #59cca6;
+}
+
+.card-b {
+    background-image: url(/img/col_2.png);
+    background-color: #91ad41;
+}
+
+.card-c {
+    background-image: url(/img/col_3.png);
+    background-color: #e3b375;
+}
+
+.card-d {
+    background-image: url(/img/col_4.png);
+    background-color: #ef7f94;
+}
+
+.card-e {
+    background-image: url(/img/cac_loai_hat.png);
+    background-color: #cc9d59;
+}
+
+.card-f {
+    background-image: url(/img/gia_vi_huu_co.png);
+    background-color: #5bafc1f0;
+}
+
+.card-g {
+    background-image: url(/img/ngu_coc.png);
+    background-color: #9e9e9e;
+}
+
+.card-h {
+    background-image: url(/img/sieu_thuc_pham.png);
+    background-color: #18991ed4;
+}
+
+.card-body-title {
+    position: relative;
+}
+
+.card-text-content {
+    position: relative;
+    line-height: 1.5;
+    width: 210px;
+    font-size: 15px;
+}
+
+.card-all-product::before {
+    content: '';
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 500ms ease;
+}
+
+.card-all-product:hover::before {
+    opacity: 0.8;
+}
+
+.btn-watch {
+    position: absolute;
+    background-color: #27272f;
+    margin-top: 15px;
+    border: none;
+}
+
+.btn-watch:hover {
+    background-color: #df0877;
+}
+
+.about-title span {
+    font-weight: 600;
+    padding-bottom: 50px;
+}
+
+.text-gradient {
+    background: -webkit-linear-gradient(35deg, #91ad41 0%, #ff8a6c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-top: 60px;
+}
+
+.about-heading {
+    display: flex;
+    justify-content: center;
+    font-size: 35px;
+    position: relative;
+}
+
+.about-heading::after {
+    content: '';
+    background-image: url('/img/bg_title.png');
+    background-repeat: no-repeat;
+    width: 69px;
+    height: 22px;
+    position: absolute;
+    left: 47%;
+    bottom: 20px;
+}
+
+.about-title p {
+    text-align: center;
+    padding: 0 20%;
+}
+
+.owl-stage-outer {
+    display: flex;
+    padding-top: 35px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.about-item-img {
+    display: flex;
+    border-radius: 50%;
+    justify-content: center;
+    padding-left: 25px;
+}
+
+.about-item-title {
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    padding-top: 9px;
+    font-size: 17px;
+}
+
+.about-item-sum span {
+    text-align: center;
+    font-size: 12px;
+    padding: 10px 15px;
+    display: block;
+}
+
+.slide-news {
+    width: 560px;
+    min-width: 560px;
+}
+
+.about-news-video {
+    display: flex;
+    text-align: center;
+    padding: 50px 10%;
+}
+
+.text-gradient-news {
+    margin-right: 64px;
+}
+
+.text-gradient-video,
+.text-gradient-news {
+    margin-bottom: 15px;
+    font-size: 35px;
+    font-weight: 500;
+    color: #91ad41;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+    height: 315px;
+}
+
+.carousel-item h5 {
+    margin-top: 25px;
+}
+
+.about-video h5 {
+    padding-top: 17px;
+}
+
+.hotline-content h2 {
+    color: #fff;
+    font-size: 30px;
+}
+
+.hotline-content a {
+    color: #fff;
+    font-size: 50px;
+    font-weight: 700;
+    margin-top: 15px;
+    display: block;
+}
+
+.hotline-content p {
+    color: #fff;
+    margin-top: 10px;
+    display: block;
+}
+
+.hotline {
+    background-image: url(../image/bg_hotline.jpg);
+    margin: 30px 0;
+    background-repeat: no-repeat;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    text-align: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    position: relative;
+    height: 360px;
+}
+.trademark-item {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 100px;
+}
+
+.trademark-item1 {
+    padding-right: 45px;
+}
+
+.trademark-item1 img {
+    height: 100%;
 }

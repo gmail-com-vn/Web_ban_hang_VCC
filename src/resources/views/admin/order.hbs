@@ -11,9 +11,8 @@
         </div>
     </div>
     <div style="margin: 0 5%;">
-        <a class="btn btn-back" href="/" style="margin: 25px 13px;">
-            <span class="oi oi-arrow-left">
-            </span>
+        <a class="btn btn-dark" href="/" style="margin: 25px 13px;">
+            <i class="fa-solid fa-left-long"></i>
             Quay lại cửa hàng
         </a>
         <table class="table">
@@ -38,7 +37,7 @@
                     </th>
                     <th scope="col">Trạng thái{{{sortable 'status' _sort}}}</th>
                     <th scope="col">Cập nhật trạng thái</th>
-
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -47,14 +46,19 @@
                     <th scope="row">{{this._id}}</th>
                     <td>{{this.name}}</td>
                     <td>
-                        {{#each products}}{{user}}
-                        <div style="display: flex; margin: 5px 0">
-                            <div>
-                                <img src="{{this.product.image.[0]}}" alt="" style="width: 40px;">
+                        <div>
+                            {{#each products}}
+                            <div style="display: flex; margin: 5px 0">
+                                <div>
+                                    <img src="{{this.product.imageProduct.[0]}}" alt="" style="height: 50px;">
+                                </div>
+                                <div>
+                                    <div>{{this.product.name}}</div>
+                                    <div>Số lượng: {{this.quantity}}</div>
+                                </div>
                             </div>
-                            <div style="margin-left: 5px">{{this.product.name}}: Số lượng {{this.quantity}}</div>
+                            {{/each}}
                         </div>
-                        {{/each}}
                     </td>
                     <td>{{this.phone}}</td>
                     <td>{{this.address}}</td>
@@ -64,125 +68,171 @@
                     <td>
                         <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#update-status-modal">Cập nhật trạng thái</a>
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
+                            data-target="#order-modal-{{this._id}}">Xem chi tiết</a>
+
+                        <div id="order-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title flex">Xem chi tết đơn hàng
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6>Mã đơn hàng: {{this._id}}</h6>
+                                        <h6>Sản phẩm:</h6>
+                                        <div style="background-color: #f3f3f3;">
+                                            {{#each products}}
+                                            <div style="display: flex; margin: 5px 0">
+                                                <div>
+                                                    <img src="{{this.product.imageProduct.[0]}}" alt=""
+                                                        style="height: 50px;">
+                                                </div>
+                                                <div>
+                                                    <div>{{this.product.name}}</div>
+                                                    <div>Số lượng: {{this.quantity}}</div>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+                                        </div>
+                                        <p>Tên người nhận: {{this.name}}</p>
+                                        <p>Số điện thoại: {{this.phone}}</p>
+                                        <p>Địa chỉ: {{this.address}}</p>
+                                        <p>Tổng tiền: {{this.totalMonney}}</p>
+                                        <p>Thời gian đặt hàng: {{formatDateTime this.createdAt}}</p>
+                                        <p>Trạng thái đơn hàng: {{this.orderStatus}}</p>
+                                        {{!-- <h4 class="text-center">Đánh giá</h4> --}}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Bạn chưa có đơn đặt hàng nào.
+                        <a href="/">Quay lại cửa hàng</a>
+                    </td>
+                </tr>
+
+                {{/each}}
+            </tbody>
+        </table>
     </div>
-    </td>
-    </tr>
 
-    {{else}}
-    <tr>
-        <td colspan="5" class="text-center">
-            Bạn chưa có đơn đặt hàng nào.
-            <a href="/">Quay lại cửa hàng</a>
-        </td>
-    </tr>
+    <div id="update-status-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content model-content-status">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật trạng thái giao dịch</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="display: flex;">
+                    <div class="div-btn-status">
+                        <button id="btn-van-chuyen" type="button" class="btn btn-primary btn-status">Vận
+                            chuyển</button>
+                    </div>
+                    <div class="div-btn-status">
+                        <button id="btn-dang-giao" type="button" class="btn btn-info btn-status">Đang
+                            giao</button>
+                    </div>
+                    <div class="div-btn-status">
+                        <button id="btn-hoan-thanh" type="button" class="btn btn-success btn-status">Hoàn
+                            thành</button>
+                    </div>
+                    <div class="div-btn-status">
+                        <button id="btn-da-huy" type="button" class="btn btn-danger btn-status">Đã
+                            hủy</button>
+                    </div>
+                    <div class="div-btn-status">
+                        <button id="btn-tra-hang" type="button" class="btn btn-warning btn-status">Trả hàng</button>
+                    </div>
 
-    {{/each}}
-    </tbody>
-    </table>
-</div>
-
-<div id="update-status-modal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Cập nhật trạng thái giao dịch</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="display: flex;">
-                <div class="col-lg-2 div-btn-status">
-                    <button id="btn-van-chuyen" type="button" class="btn btn-primary btn-status">Vận
-                        chuyển</button>
                 </div>
-                <div class="col-lg-2 div-btn-status">
-                    <button id="btn-dang-giao" type="button" class="btn btn-info btn-status">Đang
-                        giao</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-                <div class="col-lg-2 div-btn-status">
-                    <button id="btn-hoan-thanh" type="button" class="btn btn-success btn-status">Hoàn
-                        thành</button>
-                </div>
-                <div class="col-lg-2 div-btn-status">
-                    <button id="btn-da-huy" type="button" class="btn btn-danger btn-status">Đã
-                        hủy</button>
-                </div>
-                <div class="col-lg-2 div-btn-status">
-                    <button id="btn-tra-hang" type="button" class="btn btn-warning btn-status">Trả hàng</button>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div>
 
-<form name="van-chuyen-form" method="POST">
-    <input type="hidden" name="orderStatus" value="Vận chuyển">
-</form>
-<form name="dang-giao-form" method="POST">
-    <input type="hidden" name="orderStatus" value="Đang giao">
-</form>
-<form name="hoan-thanh-form" method="POST">
-    <input type="hidden" name="orderStatus" value="Hoàn thành">
-</form>
-<form name="da-huy-form" method="POST">
-    <input type="hidden" name="orderStatus" value="Đã hủy">
-</form>
-<form name="tra-hang-form" method="POST">
-    <input type="hidden" name="orderStatus" value="Trả hàng">
-</form>
+    <form name="van-chuyen-form" method="POST">
+        <input type="hidden" name="orderStatus" value="Vận chuyển">
+    </form>
+    <form name="dang-giao-form" method="POST">
+        <input type="hidden" name="orderStatus" value="Đang giao">
+    </form>
+    <form name="hoan-thanh-form" method="POST">
+        <input type="hidden" name="orderStatus" value="Hoàn thành">
+    </form>
+    <form name="da-huy-form" method="POST">
+        <input type="hidden" name="orderStatus" value="Đã hủy">
+    </form>
+    <form name="tra-hang-form" method="POST">
+        <input type="hidden" name="orderStatus" value="Trả hàng">
+    </form>
 
-<script>
+    <script>
 
-    document.addEventListener('DOMContentLoaded', function () {
-        let orderId;
-        const vanchuyenForm = document.forms['van-chuyen-form']
-        const btnVanchuyen = document.getElementById('btn-van-chuyen')
+        document.addEventListener('DOMContentLoaded', function () {
+            let orderId;
+            const vanchuyenForm = document.forms['van-chuyen-form']
+            const btnVanchuyen = document.getElementById('btn-van-chuyen')
 
-        const danggiaoForm = document.forms['dang-giao-form']
-        const btnDanggiao = document.getElementById('btn-dang-giao')
+            const danggiaoForm = document.forms['dang-giao-form']
+            const btnDanggiao = document.getElementById('btn-dang-giao')
 
-        const hoanthanhForm = document.forms['hoan-thanh-form']
-        const btnHoanthanh = document.getElementById('btn-hoan-thanh')
+            const hoanthanhForm = document.forms['hoan-thanh-form']
+            const btnHoanthanh = document.getElementById('btn-hoan-thanh')
 
-        const dahuyForm = document.forms['da-huy-form']
-        const btnDahuy = document.getElementById('btn-da-huy')
+            const dahuyForm = document.forms['da-huy-form']
+            const btnDahuy = document.getElementById('btn-da-huy')
 
-        const trahangForm = document.forms['tra-hang-form']
-        const btnTrahang = document.getElementById('btn-tra-hang')
+            const trahangForm = document.forms['tra-hang-form']
+            const btnTrahang = document.getElementById('btn-tra-hang')
 
-        // When dialog confirm clicked
-        $('#update-status-modal').on('show.bs.modal', function (event) {
-            const button = $(event.relatedTarget)
-            orderId = button.data('id')
+            // When dialog confirm clicked
+            $('#update-status-modal').on('show.bs.modal', function (event) {
+                const button = $(event.relatedTarget)
+                orderId = button.data('id')
+            })
+
+            btnVanchuyen.onclick = function () {
+                vanchuyenForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
+                vanchuyenForm.submit()
+            }
+
+            btnDanggiao.onclick = function () {
+                danggiaoForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
+                danggiaoForm.submit()
+            }
+
+            btnHoanthanh.onclick = function () {
+                hoanthanhForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
+                hoanthanhForm.submit()
+            }
+
+            btnDahuy.onclick = function () {
+                dahuyForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
+                dahuyForm.submit()
+            }
+
+            btnTrahang.onclick = function () {
+                trahangForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
+                trahangForm.submit()
+            }
         })
-
-        btnVanchuyen.onclick = function () {
-            vanchuyenForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
-            vanchuyenForm.submit()
-        }
-
-        btnDanggiao.onclick = function () {
-            danggiaoForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
-            danggiaoForm.submit()
-        }
-
-        btnHoanthanh.onclick = function () {
-            hoanthanhForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
-            hoanthanhForm.submit()
-        }
-
-        btnDahuy.onclick = function () {
-            dahuyForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
-            dahuyForm.submit()
-        }
-
-        btnTrahang.onclick = function () {
-            trahangForm.action = '/admin/quan-ly-don-hang/' + orderId + '?_method=PUT'
-            trahangForm.submit()
-        }
-    })
-</script>
+    </script>

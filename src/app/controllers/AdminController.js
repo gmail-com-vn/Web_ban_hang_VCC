@@ -49,10 +49,11 @@ class AdminController {
                 quantityWarehouse: req.body.quantityWarehouse,
                 imageProduct: imagePaths,
                 userId: req.user,
+                quantitySold: 0,
             });
 
             await newProduct.save();
-            res.status(201).json({ message: 'Product created successfully!' });
+            res.redirect('/admin/quan-ly-san-pham');
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
@@ -137,12 +138,26 @@ class AdminController {
 
     getListProduct(req, res, next) {
         Promise.all([Product.find({}).populate('categoryId'), Product.countDocumentsDeleted({})])
-            .then(([products, deletedCount]) => res.render('admin/product/list-product', { products: mutipleMongooseToObject(products), deletedCount }))
+            .then(([products, deletedCount]) =>
+                res.render('admin/product/list-product', { products: mutipleMongooseToObject(products), deletedCount, cssPath: 'admin-product.css' }),
+            )
             .catch(next);
     }
 
+    handleFormActions(req, res, next) {
+        switch (req.body.action) {
+            case 'delete':
+                Product.delete({ _id: { $in: req.body.productIds } })
+                    .then(() => res.redirect('back'))
+                    .catch(next);
+                break;
+            default:
+                res.json({ message: 'Action is invalid' });
+        }
+    }
+
     getCreateCategory(req, res, next) {
-        res.render('admin/category/create-category', { cssPath: 'create-category.css' });
+        res.render('admin/category/create-category', { cssPath: 'admin-category.css' });
     }
     postCreateCategory(req, res, next) {
         const category = new Category({
@@ -159,6 +174,7 @@ class AdminController {
             .then((categories) =>
                 res.render('admin/category/list-category', {
                     categories: mutipleMongooseToObject(categories),
+                    cssPath: 'admin-category.css',
                 }),
             )
             .catch(next);
@@ -168,6 +184,7 @@ class AdminController {
             .then((category) =>
                 res.render('admin/category/edit-category', {
                     category: mongooseToObjiect(category),
+                    cssPath: 'admin-category.css',
                 }),
             )
             .catch(next);
@@ -268,7 +285,7 @@ class AdminController {
     }
     getListPost(req, res, next) {
         Promise.all([Post.find({}), Post.countDocumentsDeleted({})])
-            .then(([posts, deletedCount]) => res.render('admin/post/list-post', { posts: mutipleMongooseToObject(posts), deletedCount }))
+            .then(([posts, deletedCount]) => res.render('admin/post/list-post', { posts: mutipleMongooseToObject(posts), deletedCount, cssPath: 'admin-post.css' }))
             .catch(next);
     }
 
@@ -283,6 +300,7 @@ class AdminController {
             .then((orders) =>
                 res.render('admin/order', {
                     orders: mutipleMongooseToObject(orders),
+                    cssPath: 'admin-order.css',
                 }),
             )
             .catch(next);
@@ -318,53 +336,6 @@ class AdminController {
         } catch (error) {
             throw new Error('Error while fetching feedback status: ' + error.message);
         }
-        // // Lấy các sản phẩm đã được đánh giá bởi người dùng (req.user.id)
-        // Rating.find({})
-        //     .populate({
-        //         path: 'productId',
-        //         populate: {
-        //             path: 'categoryId',
-        //             model: 'Category',
-        //         },
-        //     })
-        //     .populate('customerId')
-        //     // .populate('productId')
-        //     .then((ratings) => {
-        //         ratingList = ratings;
-        //         ratedProducts = ratings.map((rating) => rating.productId._id);
-        //         console.log('rating', ratedProducts);
-
-        //         // Lấy tất cả đơn hàng của người dùng hiện tại (req.user.id)
-        //         return Order.find({ customerId: req.user.id });
-        //     })
-        //     .then((orders) => {
-        //         const productIdsInOrders = orders.flatMap((order) => order.products.map((product) => product.product)); // Lấy tất cả productId từ các đơn hàng của người dùng
-
-        //         // Lấy tất cả sản phẩm dựa trên các productId
-        //         return Product.find({ _id: { $in: productIdsInOrders } }).populate('categoryId');
-        //     })
-        //     .then((products) => {
-        //         // console.log('products', products);
-
-        //         // Tìm các sản phẩm đã đánh giá
-        //         const ratedProductsInfo = products.filter((product) => ratedProducts.includes(product._id));
-
-        //         // Tìm các sản phẩm chưa được đánh giá
-        //         unratedProducts = products.filter((product) => !ratedProducts.includes(product._id));
-
-        //         res.render('customer/evaluate', {
-        //             ratedProducts: mutipleMongooseToObject(ratedProductsInfo),
-        //             unratedProducts: mutipleMongooseToObject(unratedProducts),
-        //             ratingList: mutipleMongooseToObject(ratingList),
-        //         });
-        //         console.log('Các sản phẩm đã đánh giá:', ratedProductsInfo);
-        //         console.log('Các sản phẩm chưa được đánh giá:', unratedProducts);
-        //         console.log('Các đánh giá:', ratingList);
-        //     })
-        //     .catch((err) => {
-        //         // Xử lý lỗi nếu có
-        //         console.error(err);
-        //     });
     }
 
     postReplyEvaluate(req, res, next) {

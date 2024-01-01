@@ -54,6 +54,13 @@ class SiteController {
                         validationErrors: [],
                     });
                 }
+                if (user.lock === true) {
+                    return res.status(422).render('auth/login', {
+                        errorMessage: 'Tài khoản của bạn đã bị khóa!',
+                        oldInput: { email: email, password: password },
+                        validationErrors: [],
+                    });
+                }
                 bcrypt
                     .compare(password, user.password)
                     .then((doMatch) => {
@@ -155,6 +162,7 @@ class SiteController {
             .then((products) => {
                 res.render('site/search', {
                     products: mutipleMongooseToObject(products),
+                    cssPath: 'product.css',
                 });
             })
             .catch(next);
@@ -303,6 +311,7 @@ class SiteController {
             .then((user) => {
                 res.render('customer/profile', {
                     user: mongooseToObjiect(user),
+                    cssPath: 'customer-profile.css',
                 });
             })
 
