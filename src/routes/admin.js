@@ -47,6 +47,9 @@ router.get('/quan-ly-danh-muc', isLogin, isAdmin, adminController.getListCategor
 router.put('/quan-ly-don-hang/:id', isLogin, isAdmin, adminController.updateOrderStatus);
 router.get('/quan-ly-don-hang', isLogin, isAdmin, adminController.getListOrder);
 
+router.get('/danh-gia-cua-hang', isLogin, isAdmin, adminController.getListEvaluate);
+router.post('/danh-gia-cua-hang', isLogin, isAdmin, adminController.postReplyEvaluate);
+
 router.post('/quan-ly-tai-khoan/khoa-tai-khoan:id', isLogin, isAdmin, adminController.lockAccount);
 router.post('/quan-ly-tai-khoan/mo-khoa-tai-khoan:id', isLogin, isAdmin, adminController.unlockAccount);
 router.get('/quan-ly-tai-khoan', isLogin, isAdmin, adminController.getlListAccount);

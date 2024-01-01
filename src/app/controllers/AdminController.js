@@ -8,6 +8,7 @@ const { Promise } = require('mongoose');
 const Post = require('../models/Post');
 const Order = require('../models/Order');
 const User = require('../models/User');
+const Rating = require('../models/Rating');
 
 // Cấu hình Cloudinary
 cloudinary.config({
@@ -284,6 +285,91 @@ class AdminController {
                     orders: mutipleMongooseToObject(orders),
                 }),
             )
+            .catch(next);
+    }
+
+    async getListEvaluate(req, res, next) {
+        try {
+            const feedbackRatings = await Rating.find({ feedback: { $exists: true, $ne: null } })
+                .populate({
+                    path: 'productId',
+                    populate: {
+                        path: 'categoryId',
+                        model: 'Category',
+                    },
+                })
+                .populate('customerId');
+            const notFeedbackRatings = await Rating.find({ feedback: { $exists: false } })
+                .populate({
+                    path: 'productId',
+                    populate: {
+                        path: 'categoryId',
+                        model: 'Category',
+                    },
+                })
+                .populate('customerId');
+            console.log('Feedback Records:', feedbackRatings);
+            console.log('Not Feedback Records:', notFeedbackRatings);
+
+            res.render('admin/evaluate', {
+                feedbackRatings: mutipleMongooseToObject(feedbackRatings),
+                notFeedbackRatings: mutipleMongooseToObject(notFeedbackRatings),
+            });
+        } catch (error) {
+            throw new Error('Error while fetching feedback status: ' + error.message);
+        }
+        // // Lấy các sản phẩm đã được đánh giá bởi người dùng (req.user.id)
+        // Rating.find({})
+        //     .populate({
+        //         path: 'productId',
+        //         populate: {
+        //             path: 'categoryId',
+        //             model: 'Category',
+        //         },
+        //     })
+        //     .populate('customerId')
+        //     // .populate('productId')
+        //     .then((ratings) => {
+        //         ratingList = ratings;
+        //         ratedProducts = ratings.map((rating) => rating.productId._id);
+        //         console.log('rating', ratedProducts);
+
+        //         // Lấy tất cả đơn hàng của người dùng hiện tại (req.user.id)
+        //         return Order.find({ customerId: req.user.id });
+        //     })
+        //     .then((orders) => {
+        //         const productIdsInOrders = orders.flatMap((order) => order.products.map((product) => product.product)); // Lấy tất cả productId từ các đơn hàng của người dùng
+
+        //         // Lấy tất cả sản phẩm dựa trên các productId
+        //         return Product.find({ _id: { $in: productIdsInOrders } }).populate('categoryId');
+        //     })
+        //     .then((products) => {
+        //         // console.log('products', products);
+
+        //         // Tìm các sản phẩm đã đánh giá
+        //         const ratedProductsInfo = products.filter((product) => ratedProducts.includes(product._id));
+
+        //         // Tìm các sản phẩm chưa được đánh giá
+        //         unratedProducts = products.filter((product) => !ratedProducts.includes(product._id));
+
+        //         res.render('customer/evaluate', {
+        //             ratedProducts: mutipleMongooseToObject(ratedProductsInfo),
+        //             unratedProducts: mutipleMongooseToObject(unratedProducts),
+        //             ratingList: mutipleMongooseToObject(ratingList),
+        //         });
+        //         console.log('Các sản phẩm đã đánh giá:', ratedProductsInfo);
+        //         console.log('Các sản phẩm chưa được đánh giá:', unratedProducts);
+        //         console.log('Các đánh giá:', ratingList);
+        //     })
+        //     .catch((err) => {
+        //         // Xử lý lỗi nếu có
+        //         console.error(err);
+        //     });
+    }
+
+    postReplyEvaluate(req, res, next) {
+        Rating.updateOne({ _id: req.body.idRating }, { feedback: req.body.feedback })
+            .then(() => res.redirect('back'))
             .catch(next);
     }
 

@@ -94,80 +94,87 @@
                 {{/each}}
             </div>
             <div class="tab-pane">
-                {{#each ratedProducts}}
-                <div>
-                    <div>
-                        <p>Đã hoàn thành</p>
-                    </div>
-                    <div>
-                        <img src="{{this.imageProduct.[0]}}" height="80" width="80" alt="">
-                        <p>{{this.name}}</p>
-                        <p>{{this.categoryId.categoryProduct}}</p>
-                    </div>
-                    <div>
+                <div class="row">
+                    {{#each ratingList}}
+                    <div class="col-lg-6" style="border: 1px solid #ccc; margin-top: 10px; padding: 15px">
+                        <div class="card-evaluate">
+                            <div class="flex">
+                                <img class="avatar" width="85" height="85" src="{{this.customerId.avatar}}" alt="" />
+                                <div>
+                                    <p>{{this.customerId.firstname}} {{this.customerId.lastname}}</p>
 
-                        <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
-                            data-target="#evaluate-modal-{{this._id}}">Đánh giá</a>
-                        <div id="evaluate-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title flex">Đánh giá sản phẩm
-                                        </h5>
+                                    <div>
+                                        {{#if (equalHelper this.star 1)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (equalHelper this.star 2)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (equalHelper this.star 3)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (equalHelper this.star 4)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
 
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <i class="far fa-star star"></i>
+                                        {{/if}}
+                                        {{#if (equalHelper this.star 5)}}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i>
+                                        {{/if}}
                                     </div>
-                                    <div class="modal-body">
-                                        <h6>Sản phẩm</h6>
-                                        <div class="flex" style="background-color: #f3f3f3; padding: 15px 0;">
-                                            <div class="col-lg-3" style="padding-right: 0;">
-                                                <img width="50px" height="50px" src="{{this.imageProduct.[0]}}"
-                                                    alt="" />
-                                            </div>
-                                            <div class="col-lg-9">
-                                                <p>Tên sản phẩm: {{this.name}}</p>
-                                                <p>Loại sản phẩm: {{this.categoryId.categoryProduct}}</p>
-                                            </div>
-                                        </div>
-                                        <h4 class="text-center">Đánh giá</h4>
-                                        <form method="POST" action="/danh-gia-cua-toi" enctype="multipart/form-data">
-                                            <div class="rating" style="font-size: 40px; justify-content: center;">
-                                                <input type="hidden" class="rating-star" name="star" value="3">
-                                                <div class="rating-item" data-rate="1"></div>
-                                                <div class="rating-item" data-rate="2"></div>
-                                                <div class="rating-item active" data-rate="3"></div>
-                                                <div class="rating-item" data-rate="4"></div>
-                                                <div class="rating-item" data-rate="5"></div>
-                                            </div>
-                                            <p>Thêm hình ảnh</p>
-                                            <input type="file" class="form-control" id="imageRating"
-                                                name="imageRating" />
-                                            <div class="form-group">
-                                                <label for="comment">Nhận xét của bạn{{user._id}}</label>
-                                                <textarea class="form-control" id="comment" name="comment"
-                                                    style="height: 200px;" required></textarea>
-                                            </div>
-
-                                            <input type="hidden" name="productId" value="{{this._id}}">
-
-                                            <div class="col-lg-12">
-                                                <button type="submit" class="btn btn-success col-lg-12"
-                                                    style="border-radius: 15px;">Gửi đánh giá</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                    </div>
+                                    <p>{{formatDateTime this.createdAt}}</p>
                                 </div>
                             </div>
+
+                            <div class="" style="margin-left: 85px; margin-bottom: 10px">
+                                <svg width="10" height="9" viewBox="0 0 10 9" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.34 0.723999V2.092C8.62 2.212 8.116 2.464 7.828 2.848C7.54 3.232 7.396 3.916 7.396 4.9H9.232V8.32H5.704V5.44C5.704 3.952 5.98 2.8 6.532 1.984C7.084 1.144 8.02 0.723999 9.34 0.723999ZM4.156 0.723999V2.092C3.436 2.212 2.932 2.464 2.644 2.848C2.356 3.232 2.212 3.916 2.212 4.9H4.048V8.32H0.52V5.44C0.52 3.952 0.796 2.8 1.348 1.984C1.9 1.144 2.836 0.723999 4.156 0.723999Z"
+                                        fill="#E9435E"></path>
+                                </svg>
+                                <div>
+                                    &emsp;{{this.comment}}
+                                </div>
+                            </div>
+                            <div style="background-color: #f3f3f3; padding: 10px 20px; margin-left: 85px;">
+                                <p style="font-size: 18px; font-weight:600">Phản hồi của người bán</p>
+                                <p>{{this.feedback}}</p>
+                            </div>
+                            <a class="flex" style="margin-left: 85px; margin-top: 20px;"
+                                href="/san-pham/{{this.productId.categoryId.slug}}/{{this.productId.slug}}">
+
+                                <img class="" width="60" height="60" src="{{this.productId.imageProduct.[0]}}" alt="" />
+                                <div class="flex items-center"
+                                    style="background-color: #f3f3f3; width: 100%; padding-left: 10px">
+                                    <p>{{this.productId.name}}
+                                    </p>
+
+                                </div>
+                            </a>
                         </div>
                     </div>
+                    {{/each}}
                 </div>
-                {{/each}}
             </div>
         </div>
     </div>

@@ -100,6 +100,8 @@
                                     </div>
                                 </div>
                             </div>
+                            {{#if (equalHelper this.orderStatus 'Hoàn thành')}}
+                            <a class="btn-success btn" href="/danh-gia-cua-toi">Đánh giá</a>{{/if}}
                         </div>
                     </td>
                 </tr>

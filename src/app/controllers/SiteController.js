@@ -237,38 +237,55 @@ class SiteController {
             .catch(next);
     }
 
-    postOrder(req, res, next) {
-        req.user
-            .populate('cart.items.productId')
-            .then((user) => {
-                const products = user.cart.items.map((i) => {
-                    return { quantity: i.quantity, product: { ...i.productId._doc } };
-                });
-                console.log(products);
-                let total = 0;
-                products.forEach((p) => {
-                    total += p.quantity * p.product.price;
-                });
-                const order = new Order({
-                    customerId: user._id,
-                    orderStatus: 'Chờ xác nhận',
-                    name: req.body.name,
-                    phone: req.body.phone,
-                    address: req.body.address,
-                    products: products,
-                    totalMonney: total,
-                });
-                return order.save();
-            })
-            .then(() => {
-                return req.user.clearCart();
-            })
-            .then(() => {
-                req.session.user = req.user;
-                return req.session.save(() => {
-                    res.redirect('/don-hang-cua-toi');
-                });
+    async postOrder(req, res, next) {
+        try {
+            const user = await req.user.populate('cart.items.productId');
+
+            const products = user.cart.items.map((i) => {
+                return { quantity: i.quantity, product: { ...i.productId._doc } };
             });
+
+            let total = 0;
+            products.forEach((p) => {
+                total += p.quantity * p.product.price;
+            });
+
+            const order = new Order({
+                customerId: user._id,
+                orderStatus: 'Chờ xác nhận',
+                name: req.body.name,
+                phone: req.body.phone,
+                address: req.body.address,
+                products: products,
+                totalMonney: total,
+            });
+
+            const savedOrder = await order.save();
+
+            const updateQuantityPromises = savedOrder.products.map(async (prod) => {
+                const updatedProduct = await Product.findByIdAndUpdate(
+                    prod.product._id,
+                    {
+                        $inc: { quantitySold: prod.quantity, quantityWarehouse: -prod.quantity },
+                    },
+                    { new: true },
+                );
+                return updatedProduct;
+            });
+
+            const updatedProducts = await Promise.all(updateQuantityPromises);
+
+            await req.user.clearCart();
+
+            req.session.user = req.user;
+            req.session.save(() => {
+                res.redirect('/don-hang-cua-toi');
+            });
+        } catch (err) {
+            console.error(err);
+            // Xử lý lỗi nếu có
+            // Ví dụ: res.status(500).send('Error occurred');
+        }
     }
 
     getOrder(req, res, next) {
@@ -325,10 +342,18 @@ class SiteController {
 
         // Lấy các sản phẩm đã được đánh giá bởi người dùng (req.user.id)
         Rating.find({ userId: req.user.id })
+            .populate({
+                path: 'productId',
+                populate: {
+                    path: 'categoryId',
+                    model: 'Category',
+                },
+            })
             .populate('customerId')
+            // .populate('productId')
             .then((ratings) => {
                 ratingList = ratings;
-                ratedProducts = ratings.map((rating) => rating.productId);
+                ratedProducts = ratings.map((rating) => rating.productId._id);
                 console.log('rating', ratedProducts);
 
                 // Lấy tất cả đơn hàng của người dùng hiện tại (req.user.id)
