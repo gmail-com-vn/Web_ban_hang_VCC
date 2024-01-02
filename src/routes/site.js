@@ -54,7 +54,7 @@ router.post(
             })
             .normalizeEmail(),
 
-        body('password', 'Vui lòng nhập mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự!').isLength({ min: 6 }).isAlphanumeric().trim(),
+        body('password', 'Mật khẩu chỉ có số và văn bản và ít nhất 6 ký tự!').isLength({ min: 6 }).isAlphanumeric().trim(),
         body('confirmPassword')
             .trim()
             .custom((value, { req }) => {
@@ -69,13 +69,13 @@ router.post(
 
 router.post('/dang-xuat', isLogin, siteController.postLogout);
 
-// router.get('/dat-lai-mat-khau', siteController.getReset);
+router.get('/dat-lai-mat-khau', siteController.getReset);
 
-// router.post('/dat-lai-mat-khau', siteController.postReset);
+router.post('/dat-lai-mat-khau', siteController.postReset);
 
-// router.get('/dat-lai-mat-khau/:token', siteController.getNewPassword);
+router.get('/dat-lai-mat-khau/:token', siteController.getNewPassword);
 
-// router.post('/mat-khau-moi', siteController.postNewPassword);
+router.post('/mat-khau-moi', siteController.postNewPassword);
 
 router.get('/tim-kiem', siteController.search);
 router.post('/gio-hang/xoa-san-pham', isLogin, isCustomer, siteController.postCartDeleteProduct);

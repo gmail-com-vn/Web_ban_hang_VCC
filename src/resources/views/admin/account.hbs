@@ -27,18 +27,18 @@
             </thead>
             <tbody style="border-bottom: 1px solid #c0c9d2;">
                 {{#each users}}
-                <tr style="background-color:  {{#if this.lock}} rgba(241, 62, 101, 0.5); {{/if}}">
+                <tr style="background-color: {{#if this.lock}} rgba(241, 62, 101, 0.5); {{/if}}">
                     <th scope="row">
                         {{this._id}}
                     </th>
-                    <td class="container-avatar flex">
+                    <td class="container-avatar flex items-center">
                         <img class="avatar" width="70" height="70" src="{{this.avatar}}" alt=""
                             style="border-radius: 50%;" />
                         <p>{{this.firstname}} {{this.lastname}}</p>
                     </td>
                     <td>{{this.email}}</td>
                     <td>
-                        <a href="" class="btn btn-success" data-toggle="modal"
+                        <a href="" class="btn btn-info" data-toggle="modal"
                             data-target="#account-modal-{{this._id}}">Xem chi tiết</a>
                         <div id="account-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">

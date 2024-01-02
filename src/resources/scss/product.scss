@@ -26,6 +26,7 @@
     font-weight: 500;
     font-size: 17px;
     color: #000000;
+    font-weight: 500;
 }
 
 .card-text-product {
@@ -34,12 +35,53 @@
     font-size: 17px;
     font-weight: 500;
 }
+
+.div-btn {
+    justify-content: flex-end;
+
+    .icon-add-cart {
+        font-size: 22px;
+    }
+}
+
 //
-.div-img-product {
+.conatiner-img-prod {
+    margin: 20px 0;
+
+    .div-img {
+        padding-right: 3px;
+        padding-left: 3px;
+    }
 }
 
 .product-inf {
     font-size: 16px;
+
+    .container-prod {
+        margin: 0 30px;
+    }
+
+    .div-category {
+        margin: 5px 0 10px 0;
+    }
+
+    .container-btn-quantity {
+        margin: 30px 0 15px 0;
+    }
+
+    .input-quantity {
+        width: 50px;
+        text-align: center;
+    }
+
+    .btn-add-product {
+        font-size: 20px;
+        margin-bottom: 20px;
+        border-radius: 40px;
+    }
+    .icon-cart {
+        font-size: 22px;
+    }
 }
 
 .title-name p {
@@ -52,26 +94,6 @@
     font-weight: 700;
 }
 
-.title-love,
-.title-borrow-product {
-    padding: 0;
-    margin: 20px 0;
-}
-
-.title-love .btn-love,
-.title-borrow-product .btn-borrow-product {
-    width: 100%;
-    justify-content: center;
-}
-.title-love i {
-    margin-top: 4px;
-    margin-right: 5px;
-}
-.title-borrow-product i {
-    margin-top: 5px;
-    margin-right: 5px;
-    font-size: 15px;
-}
 .title-3 {
     padding: 30px 0;
     border-top: #000 solid 1px;
@@ -88,6 +110,40 @@
     height: 1px;
     background-color: black;
     width: 100%;
+}
+
+.container-title-evaluate {
+    margin: 35px 0 14px 0;
+}
+
+.container-header-evaluate {
+    background-color: rgb(26, 86, 163);
+    padding: 15px;
+    color: #fff;
+
+    .div-evaluate {
+        line-height: 40px;
+    }
+
+    .span-star {
+        font-size: 35px;
+        margin-left: 15px;
+    }
+    .fs-35 {
+        font-size: 35px;
+    }
+
+    .number-evaluate {
+        font-size: 25px;
+    }
+}
+
+.title-evaluate {
+    font-size: 20px;
+}
+
+.star-icon {
+    font-size: 20px;
 }
 
 .tab-link {
@@ -110,4 +166,29 @@
 
 .tab-pane.active {
     display: block;
+}
+
+.wrapper-evaluate {
+    margin: 0;
+}
+
+.container-evaluate {
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 15px;
+}
+
+.container-comment {
+    margin-left: 85px;
+    margin-bottom: 10px;
+}
+.container-feedback {
+    background-color: #f3f3f3;
+    padding: 10px 20px;
+    margin-left: 85px;
+
+    .title-feedback {
+        font-size: 17px;
+        font-weight: 600;
+    }
 }

@@ -18,7 +18,7 @@
         <form method="POST" action="/admin/quan-ly-san-pham/{{product._id}}?_method=PUT" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name" class="label-name">Tên sản phẩm</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{product.name}}">
+                <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" required>
             </div>
             <fieldset class="form-group">
                 <div class="row">
@@ -27,7 +27,7 @@
                         {{#each categories}}
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="categoryId" id="{{this._id}}"
-                                value="{{this._id}}" required />
+                                value="{{this._id}}" />
                             <label class="form-check-label" for="{{this._id}}">
                                 {{this.categoryProduct}}
                             </label>
@@ -39,29 +39,38 @@
             </fieldset>
             <div class="form-group">
                 <label for="description">Mô tả</label>
-                <textarea class="form-control" id="description" name="description"
-                    style="height: 230px;">{{product.description}}</textarea>
+                <textarea class="form-control description-input" id="description" name="description"
+                    required>{{product.description}}</textarea>
             </div>
             <div class="form-group">
                 <label for="price">Giá (VNĐ)</label>
-                <input type="number" class="form-control" id="price" name="price" value="{{product.price}}">
+                <input type="number" class="form-control" id="price" name="price" value="{{product.price}}" required>
             </div>
             <div class="form-group">
                 <label for="tradeMark">Thương hiệu</label>
-                <input type="text" class="form-control" id="tradeMark" name="tradeMark" value="{{product.tradeMark}}">
+                <input type="text" class="form-control" id="tradeMark" name="tradeMark" value="{{product.tradeMark}}"
+                    required>
             </div>
             <div class="form-group">
                 <label for="quantityWarehouse">Số lượng kho</label>
                 <input type="number" class="form-control" id="quantityWarehouse" name="quantityWarehouse"
-                    value="{{product.quantityWarehouse}}">
+                    value="{{product.quantityWarehouse}}" required>
             </div>
             <div class="form-group">
-                <label for="imageProduct">Ảnh minh họa (Vui lòng chọn 4 ảnh)</label>
+                <label for="imageProduct">Ảnh minh họa</label>
+                <div class="row">
+                    {{#each product.imageProduct}}
+                    <img class="col-lg-3" src="{{this}}" alt="">
+                    {{/each}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="imageProduct">Thay đổi ảnh minh họa</label>
                 <input type="file" class="form-control" id="imageProduct" name="imageProduct" multiple>
             </div>
-            <div class="row">
+            <div class="row container-preview">
                 <div class="col-sm-12">
-                    <div class="preview-images"></div>
+                    <div id="preview-images"></div>
                 </div>
             </div>
 
@@ -69,3 +78,31 @@
         </form>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const uploadInput = document.getElementById('imageProduct');
+
+        uploadInput.addEventListener('change', function (e) {
+            const files = e.target.files;
+
+            if (files) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+
+                    if (file.type.startsWith('image/')) {
+                        const imageURL = URL.createObjectURL(file);
+
+                        const imageElement = document.createElement('img');
+                        imageElement.src = imageURL;
+                        imageElement.classList.add('img-fluid', 'col-lg-3');
+
+                        const imageContainer = document.getElementById('preview-images');
+                        imageContainer.appendChild(imageElement);
+                    }
+                }
+            }
+        });
+    });
+</script>

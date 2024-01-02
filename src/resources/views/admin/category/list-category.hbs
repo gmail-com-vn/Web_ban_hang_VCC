@@ -31,13 +31,12 @@
                     </th>
                 </tr>
             </thead>
-            <tbody style="border-bottom: 1px solid #c0c9d2;">
+            <tbody class="content-category">
                 {{#each categories}}
                 <tr>
                     <td scope="col" class="col-lg-9">{{this.categoryProduct}}</td>
                     <td scope="col" class="col-lg-3">
-                        <a href="/admin/quan-ly-danh-muc/{{this._id}}/edit" class="btn btn-warning"
-                            style="margin-right: 5px;">Sửa</a>
+                        <a href="/admin/quan-ly-danh-muc/{{this._id}}/edit" class="btn btn-warning">Sửa</a>
                         <a href="" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#delete-category-modal">Xóa</a>
                     </td>

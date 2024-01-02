@@ -1,5 +1,12 @@
-.conatiner-trash-create {
+.container-trash-create {
   margin-bottom: 25px; }
 
 .container-items {
   margin-top: 25px; }
+
+.container-preview {
+  margin: 30px 0; }
+
+.container-img-post,
+#preview-images {
+  width: 500px; }

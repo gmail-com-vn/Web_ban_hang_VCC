@@ -3,3 +3,25 @@
 
 .container-items {
   margin-top: 25px; }
+
+.icon-trash {
+  font-size: 24px; }
+
+.checkbox-select-all-options {
+  margin: 0 10px; }
+
+.wrapper {
+  border-bottom: 1px solid #c0c9d2; }
+
+.img-prod {
+  width: 150px;
+  height: 150px; }
+
+.btn-warning {
+  margin-right: 5px; }
+
+.mr-5 {
+  margin-right: 5px; }
+
+.description-input {
+  height: 230px; }

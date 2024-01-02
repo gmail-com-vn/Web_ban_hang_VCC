@@ -11,16 +11,14 @@
         </div>
     </div>
     <div class="body-page-1">
-        <div style="text-align: center; text-transform: capitalize; font-size: 25px; font-weight: 300">
+        <div class="post-title">
             {{post.title}}
         </div>
-        <div style="margin: 25px 0; justify-content: center; display:flex;">
-            <img class="card-img-top" src="{{post.imagePost}}" alt="{{post.title}}" style="width: auto; height: 500px;">
+        <div class="flex container-img">
+            <img class="image-post" src="{{post.imagePost}}" alt="{{post.title}}">
         </div>
-        {{!-- <div class="oi oi-timer" style="display: flex; font-size: 15px; margin-bottom: 25px">{{post.createdAt}} |
-            Đăng
-            bởi: {{post.user.firstname}} {{post.user.lastname}}</div> --}}
-        <div class="news-body" style="font-family: Calibri, sans-serif;">
+
+        <div class="news-body">
             {{{post.content}}}
         </div>
     </div>

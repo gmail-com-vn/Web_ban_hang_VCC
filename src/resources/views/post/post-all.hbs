@@ -11,17 +11,17 @@
         </div>
     </div>
     <div class="body-page-1">
-        <div class="row" style="">
+        <div class="row">
             {{#each posts}}
-            <div class="col-sm-6 col-lg-4 card-wrapper" style="width: 340px; margin-bottom: 30px;">
+            <div class="col-sm-6 col-lg-4 container-card">
                 <div class="card-deck">
                     <div class="card card-post">
                         <a href="/tin-tuc/{{this.slug}}">
-                            <img src="{{this.imagePost}}" alt="" style="height: 340px; width: 100%;">
+                            <img class="img-post" src="{{this.imagePost}}" alt="">
                         </a>
                         <div class="card-body">
                             <a href="/tin-tuc/{{this.slug}}" style="color: black;">
-                                <h5 class="title" style="font-size: 17px; text-transform: uppercase;">
+                                <h5 class="title-post">
                                     {{this.title}}</h5>
                             </a>
                             <div class="content">

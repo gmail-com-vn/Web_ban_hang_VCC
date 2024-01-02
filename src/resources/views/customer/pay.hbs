@@ -23,8 +23,7 @@
     {{/unless}}
     {{#if products.length}}
     <div class="body-page-1">
-        <div class="row"
-            style="border: 1px solid rgb(36, 202, 72); font-size: 16px; background-color: rgb(19, 129, 5); color: #fff; padding-top: 5px; padding-bottom: 5px;">
+        <div class="row container-header-cart">
             <div class="col-4" style="padding-left: 55px;">Sản phẩm</div>
             <div class="col-2">Loại sản phẩm</div>
             <div class="col-2">Đơn giá(VNĐ)</div>
@@ -34,54 +33,60 @@
         </div>
 
         {{#each products}}
-        <div class="row" style="border: 1px solid rgb(36, 202, 72);">
+        <div class="row container-product">
             <div class="col-4">
-                <a href="/san-pham/{{this.productId.slug}}" style="display: flex;">
-                    <img style="width: 170px; height:170px; margin: 15px" src="{{this.productId.imageProduct.[0]}}"
-                        alt="">
-                    <p style="color: black; padding-top: 78px;">{{this.productId.name}}</p>
+                <a class="items-center flex"
+                    href="/san-pham/{{this.productId.categoryId.slug}}/{{this.productId.slug}}">
+                    <img class="image-product-info" src="{{this.productId.imageProduct.[0]}}" alt="">
+                    <p style="color: black;">{{this.productId.name}}</p>
                 </a>
             </div>
-            <div class="col-2" style="padding-top: 78px;">{{this.productId.categoryId.categoryProduct}}</div>
-            <div class="col-2" style="padding-top: 78px;">{{this.productId.price}}</div>
-            <div class="col-2" style="padding-top: 78px;">{{this.quantity}}</div>
-            <div class="col-2" style="padding-top: 78px;">{{multiplication this.quantity this.productId.price}}</div>
+            <div class="col-2 items-center flex">{{this.productId.categoryId.categoryProduct}}</div>
+            <div class="col-2 items-center flex">{{this.productId.price}}</div>
+            <div class="col-2 items-center flex">{{this.quantity}}</div>
+            <div class="col-2 items-center flex">{{multiplication this.quantity this.productId.price}}</div>
         </div>
 
         {{/each}}
-        <div style="margin-top: 15px;">
-            <div style="font-size: 18px; font-weight: 600; margin-bottom: 10px">
-                Thông tin giao hàng
+        <div class="container-pay box-shadow">
+            <div style="margin: 25px 0;">
+                <h4 class="text-center">
+                    Thông tin giao hàng
+                </h4>
             </div>
             <form action="/dat-hang" method="POST">
-                <div class="row">
-                    <div class="col-3">
-                        <div class="form-group">
-                            <div>Tên nguời nhận: (*)</div>
-                            <input type="text" class="form-control" id="name" name="name" value="{{user.lastname}}">
-                        </div>
-                        <div style="margin-bottom: 15px;">
-                            <div>Email:</div>
-                            <div>{{user.email}}</div>
-                        </div>
+                <div class="">
+                    <div class="form-group flex">
+                        <div class="field-label"><i class="fa-solid fa-envelope"></i> Email:</div>
+                        <div class="form-control">{{user.email}}</div>
                     </div>
-                    <div class="col-5">
-                        <div class="form-group">
-                            <div>Số điện thoại: (*)</div>
-                            <input type="text" class="form-control" id="phone" name="phone" value="{{user.phone}}">
-                        </div>
-                        <div class="form-group">
-                            <div>Địa chỉ: (*)</div>
-                            <input type="text" class="form-control" id="address" name="address"
-                                value="{{user.address}}">
-                        </div>
+                    <div class="form-group flex">
+                        <div class="field-label">Tên nguời nhận:</div>
+                        <input type="text" class="form-control" id="name" name="name" value="{{user.lastname}}"
+                            required>
                     </div>
+                    <div class="form-group flex">
+                        <div class="field-label"> <i class="fa-solid fa-phone"></i> Số điện thoại người nhận:</div>
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{user.phone}}" required>
+                    </div>
+                    <div class="form-group flex">
+                        <div class="field-label"><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng:</div>
+                        <input type="text" class="form-control" id="address" name="address" value="{{user.address}}"
+                            required>
+                    </div>
+
                     <input type="hidden" name="status" value="Chờ xác nhận">
-                    <div class="col-1"></div>
-                    <div class="col-3"
-                        style="font-size: 20px; border: solid 1px rgb(13, 189, 66); justify-content: center; background-color: rgb(219, 234, 196)">
-                        <div style="margin-top: 25px; display: flex; margin-bottom: 5px">Tổng tiền:&nbsp;<p
-                                style="font-weight: 700;">
+                </div>
+                <div class="flex method-pay">
+                    <div class="col-lg-7">
+                        <p>Phương thức thanh toán</p>
+                    </div>
+                    <div class="col-lg-5 text-center">Thanh toán khi nhận hàng</div>
+                </div>
+                <div class="flex">
+                    <div class="col-lg-7"></div>
+                    <div class="col-lg-5 container-btn-order">
+                        <div class="flex" style="margin-bottom: 15px">Tổng tiền:&nbsp;<p style="font-weight: 700;">
                                 {{total}}</p>&nbsp;(VNĐ)</div>
                         <button class="btn btn-success" type="submit" style="font-size: 20px">Đặt hàng</button>
                     </div>

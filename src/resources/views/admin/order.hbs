@@ -10,7 +10,7 @@
             </ol>
         </div>
     </div>
-    <div style="margin: 0 5%;">
+    <div>
         <a class="btn btn-dark" href="/" style="margin: 25px 13px;">
             <i class="fa-solid fa-left-long"></i>
             Quay lại cửa hàng
@@ -48,9 +48,9 @@
                     <td>
                         <div>
                             {{#each products}}
-                            <div style="display: flex; margin: 5px 0">
+                            <div class="flex container-prod items-center">
                                 <div>
-                                    <img src="{{this.product.imageProduct.[0]}}" alt="" style="height: 50px;">
+                                    <img class="img-prod" src="{{this.product.imageProduct.[0]}}" alt="">
                                 </div>
                                 <div>
                                     <div>{{this.product.name}}</div>
@@ -70,7 +70,7 @@
                             data-target="#update-status-modal">Cập nhật trạng thái</a>
                     </td>
                     <td>
-                        <a href="" class="btn btn-success" data-toggle="modal" data-id="{{this._id}}"
+                        <a href="" class="btn btn-info" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#order-modal-{{this._id}}">Xem chi tiết</a>
 
                         <div id="order-modal-{{this._id}}" class="modal" tabindex="-1" role="dialog">
@@ -86,12 +86,12 @@
                                     <div class="modal-body">
                                         <h6>Mã đơn hàng: {{this._id}}</h6>
                                         <h6>Sản phẩm:</h6>
-                                        <div style="background-color: #f3f3f3;">
+                                        <div class="bg-prod">
                                             {{#each products}}
-                                            <div style="display: flex; margin: 5px 0">
+                                            <div class="container-prod flex items-center">
                                                 <div>
                                                     <img src="{{this.product.imageProduct.[0]}}" alt=""
-                                                        style="height: 50px;">
+                                                        class="img-prod">
                                                 </div>
                                                 <div>
                                                     <div>{{this.product.name}}</div>
@@ -106,7 +106,6 @@
                                         <p>Tổng tiền: {{this.totalMonney}}</p>
                                         <p>Thời gian đặt hàng: {{formatDateTime this.createdAt}}</p>
                                         <p>Trạng thái đơn hàng: {{this.orderStatus}}</p>
-                                        {{!-- <h4 class="text-center">Đánh giá</h4> --}}
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -140,7 +139,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="display: flex;">
+                <div class="modal-body flex">
                     <div class="div-btn-status">
                         <button id="btn-van-chuyen" type="button" class="btn btn-primary btn-status">Vận
                             chuyển</button>

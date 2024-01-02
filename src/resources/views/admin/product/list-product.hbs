@@ -12,10 +12,10 @@
     </div>
     <div class="body-admin">
         <form name="container-form" method="POST" action="/admin/quan-ly-san-pham/handle-form-actions">
-            <div class="conatiner-trash-create flex">
+            <div class="container-trash-create flex">
                 <div class="col-lg-6">
                     <a class="btn btn-outline-info" href="/admin/quan-ly-san-pham/thung-rac">
-                        <i class="fa-solid fa-trash" style="font-size: 24px;"></i>
+                        <i class="fa-solid fa-trash icon-trash"></i>
                         <span>({{deletedCount}})</span>
                     </a>
                 </div>
@@ -33,7 +33,7 @@
                     </label>
                 </div>
 
-                <select class="checkbox-select-all-options" name="action" required style="margin: 0 10px;">
+                <select class="checkbox-select-all-options" name="action" required>
                     <option value="">--hành động--</option>
                     <option value="delete">Xóa</option>
                 </select>
@@ -67,7 +67,7 @@
 
                     </tr>
                 </thead>
-                <tbody style="border-bottom: 1px solid #c0c9d2;">
+                <tbody class="wrapper">
                     {{#each products}}
                     <tr>
                         <td>
@@ -79,15 +79,13 @@
                         <th scope="row">{{this._id}}</th>
                         <td>{{this.name}}</td>
                         <td>
-                            <img class="card-img-top" src="{{this.imageProduct.[0]}}" alt="{{this.name}}"
-                                style="width: 150px; height: 150px;">
+                            <img class="img-prod" src="{{this.imageProduct.[0]}}" alt="{{this.name}}">
                         </td>
                         <td>{{this.categoryId.categoryProduct}}</td>
                         <td>{{this.price}}</td>
                         <td>{{formatDateTime this.createdAt}}</td>
                         <td>
-                            <a href="/admin/quan-ly-san-pham/{{this._id}}/edit" class="btn btn-warning"
-                                style="margin-right: 5px;">Sửa</a>
+                            <a href="/admin/quan-ly-san-pham/{{this._id}}/edit" class="btn btn-warning">Sửa</a>
                             <a href="" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
                                 data-target="#delete-product-modal">Xóa</a>
                         </td>

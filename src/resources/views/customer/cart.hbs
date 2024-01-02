@@ -16,15 +16,14 @@
             <h3 style="font-weight: 450; text-align: center; margin: 30px 0 70px 0;">GIỎ HÀNG TRỐNG</h3>
         </div>
     </div>
-    <a class="btn btn-outline-success my-2 my-sm-0 btn-back" href="/" style="margin-left: 20%;">
+    <a class="btn btn-outline-success my-2 my-sm-0" href="/" style="margin-left: 20%;">
         <span class="oi oi-arrow-left"></span>
         QUAY LẠI CỬA HÀNG
     </a>
     {{/unless}}
     {{#if products.length}}
     <div class="body-page-1">
-        <div class="row"
-            style="border: 1px solid rgb(36, 202, 72); font-size: 16px; background-color: rgb(19, 129, 5); color: #fff; padding-top: 5px; padding-bottom: 5px;">
+        <div class="row container-header-cart">
             <div class="col-4" style="padding-left: 55px;">Sản phẩm</div>
             <div class="col-2">Loại sản phẩm</div>
             <div class="col-2">Đơn giá(VNĐ)</div>
@@ -35,19 +34,19 @@
         </div>
 
         {{#each products}}
-        <div class="row" style="border: 1px solid rgb(36, 202, 72);">
+        <div class="row container-product">
             <div class="col-4">
-                <a href="/san-pham/{{this.productId.slug}}" style="display: flex;">
-                    <img style="width: 170px; height:170px; margin: 15px" src="{{this.productId.imageProduct.[0]}}"
-                        alt="">
-                    <p style="color: black; padding-top: 78px;">{{this.productId.name}}</p>
+                <a class="items-center flex"
+                    href="/san-pham/{{this.productId.categoryId.slug}}/{{this.productId.slug}}">
+                    <img class="image-product-info" src="{{this.productId.imageProduct.[0]}}" alt="">
+                    <p style="color: black;">{{this.productId.name}}</p>
                 </a>
             </div>
-            <div class="col-2" style="padding-top: 78px;">{{this.productId.categoryId.categoryProduct}}</div>
-            <div class="col-2" style="padding-top: 78px;">{{this.productId.price}}</div>
-            <div class="col-1" style="padding-top: 78px;">{{this.quantity}}</div>
-            <div class="col-2" style="padding-top: 78px;">{{multiplication this.quantity this.productId.price}}</div>
-            <div class="col-1" style="padding-top: 72px;">
+            <div class="col-2 items-center flex">{{this.productId.categoryId.categoryProduct}}</div>
+            <div class="col-2 items-center flex">{{this.productId.price}}</div>
+            <div class="col-1 items-center flex">{{this.quantity}}</div>
+            <div class="col-2 items-center flex">{{multiplication this.quantity this.productId.price}}</div>
+            <div class="col-1 items-center flex">
                 <form action="/gio-hang/xoa-san-pham" method="POST">
                     <button class="btn btn-danger" type="submit">Xóa</button>
                     <input type="hidden" name="productId" value="{{this.productId._id}}">

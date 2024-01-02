@@ -18,11 +18,17 @@
             </div>
             <div class="form-group">
                 <label for="imagePost">Ảnh chính</label>
+                <div class="m-auto container-img-post">
+                    <img src="{{post.imagePost}}" alt="" width="100%">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="imagePost">Thay đổi ảnh chính</label>
                 <input type="file" class="form-control" id="imagePost" name="imagePost">
             </div>
-            <div class="row">
+            <div class="row container-preview">
                 <div class="col-sm-12">
-                    <div class="preview-images"></div>
+                    <div id="preview-images" class="m-auto"></div>
                 </div>
             </div>
 
@@ -189,3 +195,32 @@
         ]
     });
 </script>
+
+<script>
+    // Bắt sự kiện khi chọn file
+    document.getElementById('imagePost').addEventListener('change', function (e) {
+        // Lấy file đã chọn
+        const file = e.target.files[0];
+
+        if (file) {
+            // Tạo URL cho file hình ảnh
+            const imageURL = URL.createObjectURL(file);
+
+            // Hiển thị hình ảnh trong thẻ img
+            const imageElement = document.createElement('img');
+            imageElement.src = imageURL;
+            imageElement.classList.add('img-fluid');
+
+            // Hiển thị hình ảnh trong container
+            const imageContainer = document.getElementById('preview-images');
+            imageContainer.innerHTML = '';
+            imageContainer.appendChild(imageElement);
+        }
+    });
+</script>
+
+<style>
+    .ck-editor__editable {
+        min-height: 500px !important;
+    }
+</style>

@@ -10,6 +10,7 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const { mutipleMongooseToObject, mongooseToObjiect } = require('../../util/mongoose');
 const Rating = require('../models/Rating');
+
 sgMail.setApiKey('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');
 
 const cloudinary = require('cloudinary').v2;
@@ -187,6 +188,7 @@ class SiteController {
                 res.render('customer/cart', {
                     products: mutipleMongooseToObject(products),
                     total: total,
+                    cssPath: 'customer.css',
                 });
             })
             .catch(next);
@@ -240,6 +242,7 @@ class SiteController {
                 res.render('customer/pay', {
                     products: mutipleMongooseToObject(products),
                     total: total,
+                    cssPath: 'customer.css',
                 });
             })
             .catch(next);
@@ -301,6 +304,7 @@ class SiteController {
             .then((orders) => {
                 res.render('customer/order', {
                     orders: mutipleMongooseToObject(orders),
+                    cssPath: 'customer.css',
                 });
             })
             .catch(next);
@@ -311,7 +315,7 @@ class SiteController {
             .then((user) => {
                 res.render('customer/profile', {
                     user: mongooseToObjiect(user),
-                    cssPath: 'customer-profile.css',
+                    cssPath: 'customer.css',
                 });
             })
 
@@ -375,7 +379,7 @@ class SiteController {
                 return Product.find({ _id: { $in: productIdsInOrders } }).populate('categoryId');
             })
             .then((products) => {
-                // console.log('products', products);
+                console.log('products', products);
 
                 // Tìm các sản phẩm đã đánh giá
                 const ratedProductsInfo = products.filter((product) => ratedProducts.includes(product._id));
@@ -387,6 +391,7 @@ class SiteController {
                     ratedProducts: mutipleMongooseToObject(ratedProductsInfo),
                     unratedProducts: mutipleMongooseToObject(unratedProducts),
                     ratingList: mutipleMongooseToObject(ratingList),
+                    cssPath: 'customer.css',
                 });
                 console.log('Các sản phẩm đã đánh giá:', ratedProductsInfo);
                 console.log('Các sản phẩm chưa được đánh giá:', unratedProducts);
@@ -428,6 +433,86 @@ class SiteController {
                 .catch(next);
         }
     }
+    getReset(req, res, next) {
+        res.render('auth/reset', {
+            errorMessage: req.flash('error'),
+        });
+    }
+
+    postReset(req, res, next) {
+        crypto.randomBytes(32, (err, buffer) => {
+            if (err) {
+                console.log(err);
+                return res.redirect('/dat-lai-mat-khau');
+            }
+            const token = buffer.toString('hex');
+            User.findOne({ email: req.body.email })
+                .then((user) => {
+                    if (!user) {
+                        req.flash('error', 'Không tìm thấy tài khoản');
+                        return res.redirect('/dat-lai-mat-khau');
+                    }
+                    user.resetToken = token;
+                    user.resetTokenExpiration = Date.now() + 360000;
+                    return user.save();
+                })
+                .then(() => {
+                    res.redirect(`/dat-lai-mat-khau/${token}`);
+                    transporter.sendMail({
+                        to: req.body.email,
+                        from: 'mvt16102001@gmail.com',
+                        subject: 'Đặt lại mật khẩu',
+                        html: `
+                        <p>Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu của bạn</p>
+                        <p>Click vào <a href="http://localhost:3000/dat-lai-mat-khau/${token}">Đây</a> để đặt mật khẩu mới</p>
+                        `,
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        });
+    }
+
+    getNewPassword(req, res, next) {
+        const token = req.params.token;
+        User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+            .then((user) => {
+                res.render('auth/new-password', {
+                    errorMessage: req.flash('error'),
+                    userId: user._id.toString(),
+                    passwordToken: token,
+                });
+            })
+            .catch((err) => console.log(err));
+    }
+
+    postNewPassword(req, res, next) {
+        const newPassword = req.body.password;
+        const userId = req.body.userId;
+        const passwordToken = req.body.passwordToken;
+        let resetUser;
+        User.findOne({
+            resetToken: passwordToken,
+            resetTokenExpiration: { $gt: Date.now() },
+            _id: userId,
+        })
+            .then((user) => {
+                resetUser = user;
+                return bcrypt.hash(newPassword, 12);
+            })
+            .then((hashedPassword) => {
+                resetUser.password = hashedPassword;
+                resetUser.resetToken = undefined;
+                resetUser.resetTokenExpiration = undefined;
+                return resetUser.save();
+            })
+            .then(() => {
+                res.redirect('/dang-nhap');
+            })
+            .catch(next);
+    }
+
     getHome(req, res, next) {
         res.render('home', { cssPath: 'home.css' });
     }

@@ -10,3 +10,9 @@
   border: 1px solid #ccc; }
   .wrapper table {
     margin-bottom: 0; }
+
+.content-category {
+  border-bottom: 1px solid #c0c9d2; }
+
+.btn-warning {
+  margin-right: 5px; }

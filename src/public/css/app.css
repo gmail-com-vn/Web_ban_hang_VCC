@@ -195,3 +195,17 @@ a:hover {
 
 .body-page-2 {
   margin: 50px 20%; }
+
+.message-error {
+  font-size: 14px;
+  border-color: red;
+  background: #ec8484;
+  margin: auto;
+  text-align: center;
+  padding: 2px;
+  color: #fff;
+  border-radius: 1rem; }
+
+table td,
+table th {
+  vertical-align: middle !important; }

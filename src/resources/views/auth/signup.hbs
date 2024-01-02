@@ -12,11 +12,11 @@
     <div class="col-lg-4 div-login">
         <div class="container-form div-content-login">
             <h2 class="text-center">Đăng ký</h2>
-            <p class="text-center">
+            <p class="text-center" style="margin-bottom: 15px;">
                 Nếu bạn chưa có tài khoản, đăng ký tại đây
             </p>
             {{#if errorMessage}}
-            <div class="user-message-error">{{errorMessage}}</div>
+            <div class="message-error">{{errorMessage}}</div>
             {{/if}}
             <form class="login-form" action="/dang-ky" method="POST" novalidate>
                 <div class="form-group">

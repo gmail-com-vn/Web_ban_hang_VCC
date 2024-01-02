@@ -19,9 +19,9 @@
                     {{/each}}
 
                 </div>
-                <div class="row" style="margin: 20px 0;">
+                <div class="row conatiner-img-prod">
                     {{#each product.imageProduct}}
-                    <div class="col-lg-3" style="padding-right: 3px; padding-left: 3px;">
+                    <div class="col-lg-3 div-img">
                         <img class="tab-link{{#if @first}} active{{/if}}" src="{{this}}" alt="">
                     </div>
                     {{/each}}
@@ -29,28 +29,26 @@
                 </div>
             </div>
             <div class="product-inf col-lg-7 col-12">
-                <div style="margin: 0 30px;">
+                <div class="container-prod">
                     <div class="title-name col-lg-12">
                         <p>{{product.name}}</p>
                     </div>
-                    <div class="flex" style="margin: 5px 0 10px 0;">
+                    <div class="flex div-category">
                         <p class="col-lg-6 title-p">Loại sản phẩm:</p>
                         <p class="col-lg-6">{{product.categoryId.categoryProduct}}</p>
                     </div>
                     <form action="/gio-hang" method="POST">
-                        <div style="display: flex; margin: 30px 0 15px 0">
+                        <div class="flex container-btn-quantity">
                             <div class="col-lg-6">
                                 <h5>Số lượng:</h5>
                             </div>
                             <button class="btn qty-btn qty-minus" type="button">-</button>
-                            <input class="" type="text" name="quantity" id="quantity" value="1"
-                                style="width: 50px; text-align: center" minlength="1" maxlength="2"
-                                pattern="[1-9]{1,2}">
+                            <input class="input-quantity" type="text" name="quantity" id="quantity" value="1"
+                                minlength="1" maxlength="2" pattern="[1-9]{1,2}">
                             <button type="button" class="btn qty-btn qty-plus">+</button>
                         </div>
-                        <button class="btn btn-success col-lg-12"
-                            style="font-size: 20px; margin-bottom: 20px; border-radius: 40px;" type="submit"><i
-                                class="fa-solid fa-cart-plus" style="font-size: 22px;"></i> Thêm vào giỏ
+                        <button class="btn btn-success col-lg-12 btn-add-product" type="submit"><i
+                                class="fa-solid fa-cart-plus icon-cart"></i> Thêm vào giỏ
                             hàng</button>
                         <input type="hidden" name="productId" value="{{product._id}}">
                     </form>
@@ -89,42 +87,42 @@
 
 
         <div>
-            <div class="flex items-center" style="margin: 35px 0 14px 0">
-                <p class="title-div" style="font-size: 20px;">Đánh giá sản phẩm</p>
+            <div class="flex items-center container-title-evaluate">
+                <p class="title-div title-evaluate">Đánh giá sản phẩm</p>
                 <div class="line-div"></div>
             </div>
-            <div style=" background-color: rgb(26, 86, 163); padding:15px; color: #fff">
-                <div class="flex" style="line-height: 20px;">
+            <div class="container-header-evaluate">
+                <div class="flex div-evaluate">
                     {{#if ratings}}
                     <div>
-                        <i class="fas fa-star star font-size20"></i>
-                        <i class="fas fa-star star font-size20"></i>
-                        <i class="fas fa-star star font-size20"></i>
-                        <i class="fas fa-star star font-size20"></i>
-                        <i class="fas fa-star star font-size20"></i>
+                        <i class="fas fa-star star star-icon"></i>
+                        <i class="fas fa-star star star-icon"></i>
+                        <i class="fas fa-star star star-icon"></i>
+                        <i class="fas fa-star star star-icon"></i>
+                        <i class="fas fa-star star star-icon"></i>
                     </div>
-                    <div style="display: flex;">
-                        <span style="font-size: 35px; margin-left: 15px">
+                    <div class="flex">
+                        <span class="span-star">
                             ({{totalStar}}
                         </span>
                         <span>&nbsp;/ 5</span>
-                        <span style="font-size: 35px;">
+                        <span class="fs-35">
                             )
                         </span>
-                        <span style="margin-left: 15px;">(<span style="font-size: 25px;">{{ratings.length}}</span> đánh
+                        <span style="margin-left: 15px;">(<span class="number-evaluate">{{ratings.length}}</span> đánh
                             giá)</span>
                     </div>
                     {{/if}}
                     {{#unless ratings}}
-                    <div style="border-bottom: 1px solid black; padding-bottom: 5px;">Chưa có đánh giá nào</div>
+                    <div>Chưa có đánh giá nào</div>
                     {{/unless}}
                 </div>
 
             </div>
             <div>
-                <div class="row" style="margin: 0;">
+                <div class="row wrapper-evaluate">
                     {{#each ratings}}
-                    <div class="col-lg-6" style="border: 1px solid #ccc; margin-top: 10px; padding: 15px">
+                    <div class="col-lg-6 container-evaluate">
                         <div class="card-evaluate">
                             <div class="flex">
                                 <img class="avatar" width="85" height="85" src="{{this.customerId.avatar}}" alt="" />
@@ -173,7 +171,7 @@
                                 </div>
                             </div>
 
-                            <div class="" style="margin-left: 85px; margin-bottom: 10px">
+                            <div class="" style="container-comment">
                                 <svg width="10" height="9" viewBox="0 0 10 9" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -185,8 +183,8 @@
                                 </div>
                             </div>
                             {{#if this.feedback}}
-                            <div style="background-color: #f3f3f3; padding: 10px 20px; margin-left: 85px;">
-                                <p style="font-size: 17px; font-weight:600">Phản hồi của người bán</p>
+                            <div class="container-feedback">
+                                <p class="title-feedback">Phản hồi của người bán</p>
                                 <p>{{this.feedback}}</p>
                             </div>
                             {{/if}}
@@ -219,8 +217,6 @@
 
         }
     })
-
-
 
     const result = $('#quantity')
     const qty_minus = $('.qty-minus')

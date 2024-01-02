@@ -1,0 +1,111 @@
+.field-label {
+  width: 280px;
+  text-align: right;
+  margin: auto 35px auto auto; }
+
+.avatar {
+  width: 130px;
+  height: 130px; }
+
+.container-avatar {
+  margin: 20px 0; }
+
+.div-info-account {
+  background-color: #fff;
+  padding: 50px;
+  box-shadow: 0px 0px 13px 3px rgba(0, 0, 0, 0.2); }
+
+.field-profile {
+  width: 160px;
+  text-align: right;
+  margin: auto 35px auto auto; }
+
+.container-rating {
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  padding: 15px; }
+
+.container-unrated {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 15px; }
+  .container-unrated .image-product {
+    width: 80px;
+    height: 80px; }
+
+.container-review {
+  margin: 15px 0; }
+
+.preview-images {
+  width: 120px; }
+
+.avatar-img {
+  width: 85px;
+  height: 85px; }
+
+.prod-info {
+  background-color: #f3f3f3;
+  padding: 15px 0; }
+  .prod-info .img-product {
+    width: 50px;
+    height: 50px; }
+
+.container-comment {
+  margin-left: 85px;
+  margin-bottom: 10px; }
+
+.container-feedback {
+  background-color: #f3f3f3;
+  padding: 10px 20px;
+  margin-left: 85px; }
+  .container-feedback .title-feedback {
+    font-size: 18px;
+    font-weight: 600; }
+
+.container-product-info {
+  margin-left: 85px;
+  margin-top: 20px; }
+
+.img-prod {
+  width: 60px;
+  height: 60px; }
+
+.product-info {
+  background-color: #f3f3f3;
+  width: 100%;
+  padding-left: 10px; }
+
+.container-header-cart {
+  border: 1px solid #24ca48;
+  font-size: 16px;
+  background-color: #039b22;
+  color: #fff;
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.container-product {
+  border: 1px solid #24ca48; }
+
+.image-product-info {
+  width: 170px;
+  height: 170px;
+  margin: 15px; }
+
+.container-pay {
+  margin-top: 45px;
+  border: 1px solid #88f108; }
+
+.method-pay {
+  border: 1px solid red;
+  padding: 25px; }
+  .method-pay p {
+    font-size: 20px;
+    font-weight: 600; }
+
+.container-btn-order {
+  display: grid;
+  font-size: 20px;
+  border: solid 1px #0dbd42;
+  justify-content: center;
+  background-color: #dbeac4;
+  padding: 25px 0; }

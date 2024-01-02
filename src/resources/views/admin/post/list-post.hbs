@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="body-admin">
-        <div class="conatiner-trash-create flex">
+        <div class="container-trash-create flex">
             <div class="col-lg-6">
 
                 <a class="btn btn-outline-info" href="/admin/quan-ly-bai-dang/thung-rac">
@@ -35,7 +35,7 @@
                     </th>
                     <th scope="col"></th>
                     <th scope="col" colspan="">Thời gian tạo{{{sortable 'createdAt' _sort}}}</th>
-                    <th scope="col" style="padding-left: 35px;">Thao tác</th>
+                    <th scope="col">Thao tác</th>
 
                 </tr>
             </thead>
@@ -52,7 +52,8 @@
                     </td>
                     <td>{{formatDateTime this.createdAt}}</td>
                     <td>
-                        <a href="/admin/quan-ly-bai-dang/{{this._id}}/edit" class="btn btn-warning">Sửa</a>
+                        <a href="/admin/quan-ly-bai-dang/{{this._id}}/edit" class="btn btn-warning"
+                            style="margin-bottom: 5px;">Sửa</a>
                         <a href="" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
                             data-target="#delete-post-modal">Xóa</a>
                     </td>

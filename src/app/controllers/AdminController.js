@@ -23,7 +23,7 @@ class AdminController {
             .then((categories) =>
                 res.render('admin/product/create-product', {
                     categories: mutipleMongooseToObject(categories),
-                    cssPath: 'create-product.css',
+                    cssPath: 'admin-product.css',
                 }),
             )
             .catch(next);
@@ -65,6 +65,7 @@ class AdminController {
                 res.render('admin/product/edit-product', {
                     product: mongooseToObjiect(product),
                     categories: mutipleMongooseToObject(categories),
+                    cssPath: 'admin-product.css',
                 }),
             )
             .catch(next);
@@ -120,6 +121,7 @@ class AdminController {
                 console.log(products);
                 res.render('admin/product/trash-product', {
                     products: mutipleMongooseToObject(products),
+                    cssPath: 'admin-product.css',
                 });
             });
     }
@@ -201,7 +203,7 @@ class AdminController {
     }
 
     getCreatePost(req, res, next) {
-        res.render('admin/post/create-post', { cssPath: 'create-post.css' });
+        res.render('admin/post/create-post', { cssPath: 'admin-post.css' });
     }
 
     async postCreatePost(req, res, next) {
@@ -230,7 +232,7 @@ class AdminController {
     }
     getEditPost(req, res, next) {
         Post.findById(req.params.id)
-            .then((post) => res.render('admin/post/edit-post', { post: mongooseToObjiect(post), cssPath: 'create-post.css' }))
+            .then((post) => res.render('admin/post/edit-post', { post: mongooseToObjiect(post), cssPath: 'admin-post.css' }))
             .catch(next);
     }
     async updatePost(req, res, next) {
